@@ -1,41 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Suit Factory Bangkok</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header class="hero">
-    <h1>SUIT FACTORY<br>BANGKOK</h1>
-    <p class="sub">Custom Tailored Suits & Fine Fabrics</p>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/">
+        <!-- Text logo (replace with <img src="images/logo.png"> if you have a logo file) -->
+        <span class="logo-mark">SF</span>
+        <span class="brand-name">Suit Factory Bangkok</span>
+      </a>
+
+      <nav class="header-actions">
+        <a class="phone-link" href="tel:+66912345678">Call: +66 9 1234 5678</a>
+        <a class="book-btn" href="https://wa.me/66912345678?text=Hello%20Suit%20Factory%20I%20want%20an%20appointment" target="_blank" rel="noopener">
+          Book / WhatsApp
+        </a>
+      </nav>
+    </div>
   </header>
 
-  <main class="content">
+  <main class="page">
+    <section class="hero">
+      <h1>Custom Tailored Suits & Fine Fabrics</h1>
+      <p class="subtitle">Fast fittings • Quality fabrics • Expert tailoring</p>
+      <a class="primary-cta" href="https://wa.me/66912345678?text=Hello%20I%20want%20to%20book%20an%20appointment" target="_blank" rel="noopener">Click to make an appointment</a>
+    </section>
+
     <section class="gallery">
       <article class="card">
         <div class="card-image">
-          <img src="./images/navyslimcutsuits.jpg" alt="Navy Slim Cut Suit">
+          <img src="images/navyslimcutsuits.jpg" alt="Navy Slim Cut Suit">
         </div>
-        <h2>Navy Slim Cut Suit</h2>
-        <p class="desc">Modern slim-fit design ideal for professionals and evening wear.</p>
+        <h2 class="card-title">Navy Slim Cut Suit</h2>
+        <p class="card-desc">Modern slim-fit design ideal for professionals and evening wear.</p>
       </article>
 
       <article class="card">
         <div class="card-image">
-          <img src="./images/blazer.jpg" alt="Blazer">
+          <img src="images/blazer.jpg" alt="Blazer / Navy Classic">
         </div>
-        <h2>Blazer / Navy Classic</h2>
-        <p class="desc">Timeless elegance in pure wool, tailored for comfort and confidence.</p>
+        <h2 class="card-title">Blazer / Navy Classic</h2>
+        <p class="card-desc">Timeless elegance in pure wool, tailored for comfort and confidence.</p>
       </article>
     </section>
-
-    <div class="cta">
-      <a class="whatsapp" href="https://wa.me/">
-        Chat on WhatsApp
-      </a>
-    </div>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Suit Factory Bangkok</div>
+      <div class="footer-actions">
+        <a href="https://wa.me/66912345678?text=Hello%20I%20have%20a%20question" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="tel:+66912345678">Call</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
