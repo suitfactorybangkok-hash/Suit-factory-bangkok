@@ -1,33 +1,31 @@
 /* General Reset and Body Styles */
 body {
     background-color: #10100f; /* Very dark background */
-    color: #fff; /* Default text color for some elements */
-    font-family: 'Roboto', sans-serif; /* A common, clean sans-serif font */
+    color: #fff; /* Default text color */
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content horizontally */
+    align-items: center;
     box-sizing: border-box;
 }
 
 /* --- Top Navigation/Browser Info Area --- */
 .top-bar {
     width: 100%;
-    /* The image shows a full browser UI, but we'll focus on the area below it */
-    /* This section is primarily to ensure the main content starts lower */
-    padding-top: 50px; /* Space for the "browser" header if not adding full UI */
+    padding-top: 50px; /* Space for the "browser" header */
 }
 
 /* --- Main Content Area --- */
 .content {
     width: 100%;
     max-width: 1200px;
-    flex-grow: 1; /* Allows content to take up available space */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content block */
+    align-items: center;
     justify-content: center; /* Center content block vertically */
     text-align: center;
     padding: 20px;
@@ -35,29 +33,31 @@ body {
 
 /* --- Logo Section --- */
 .logo-section {
-    margin-bottom: 70px; /* Space below the logo */
+    margin-bottom: 70px;
     line-height: 0.9;
     padding-top: 10vh; /* Adjust as needed for vertical position */
 }
 
 .cloth-by {
+    /* Adjusted styling for the new, longer text */
     font-size: 14px;
-    letter-spacing: 5px;
-    color: #ffffff; /* White/Light text */
-    margin-bottom: -15px; /* Pull closer to the logo */
+    letter-spacing: 2px; /* Slightly reduced letter spacing for the longer phrase */
+    color: #ffffff;
+    margin-bottom: -15px;
     font-weight: 400;
-    text-align: right;
-    padding-right: 15px; /* Align text on the right of the logo text */
+    /* Center the longer text above the logo */
+    text-align: center; 
+    padding: 0; 
 }
 
 .logo {
-    font-family: 'Italianno', cursive; /* A script/calligraphy font for the logo */
+    font-family: 'Italianno', cursive;
     font-size: 15vw; /* Large, responsive font size */
     color: #88c037; /* The bright lime green color */
     font-weight: 400;
     margin: 0;
     padding: 0;
-    text-shadow: 0 0 5px rgba(136, 192, 55, 0.5); /* Subtle glow effect */
+    text-shadow: 0 0 5px rgba(136, 192, 55, 0.5);
 }
 
 /* Adjust size for smaller screens */
@@ -67,7 +67,7 @@ body {
     }
 }
 
-/* --- Menu Links --- */
+/* --- Menu Links (6 Buttons) --- */
 .menu {
     display: flex;
     justify-content: center;
@@ -79,19 +79,21 @@ body {
     display: flex;
     flex-direction: column;
     padding: 0 40px; /* Space between the two columns */
+    min-width: 250px; /* Ensure columns have enough space for link text */
 }
 
 .menu a {
-    color: #ffffff; /* White/Light text for menu items */
+    color: #ffffff;
     text-decoration: none;
     font-size: 14px;
     letter-spacing: 2px;
     line-height: 2.2; /* Spacing between menu items */
     transition: color 0.3s;
+    text-align: left; /* Align links to the left within their column */
 }
 
 .menu a:hover {
-    color: #88c037; /* Hover effect */
+    color: #88c037;
 }
 
 /* --- Discontinued Link --- */
@@ -100,11 +102,11 @@ body {
 }
 
 .discontinued-link a {
-    color: #ff0000; /* Red color as seen in the image */
+    color: #ff0000; /* Red color */
     text-decoration: none;
     font-size: 12px;
     letter-spacing: 2px;
-    border-bottom: 1px solid #ff0000; /* Underline effect */
+    border-bottom: 1px solid #ff0000;
     padding-bottom: 2px;
     transition: color 0.3s;
 }
@@ -112,8 +114,3 @@ body {
 .discontinued-link a:hover {
     color: #ff5555;
 }
-
-/* Optional: To better mimic the screenshot's 'TRUE-H 06:18' area, 
-   you would need to create a fixed header and style it with tiny white text. 
-   I've focused on the main content area for the "100% look." */
-
