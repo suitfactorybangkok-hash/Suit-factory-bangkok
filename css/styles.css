@@ -15,7 +15,7 @@ body {
 /* --- Top Navigation/Browser Info Area --- */
 .top-bar {
     width: 100%;
-    padding-top: 50px; /* Space for the "browser" header */
+    padding-top: 50px; 
 }
 
 /* --- Main Content Area --- */
@@ -35,23 +35,23 @@ body {
 .logo-section {
     margin-bottom: 70px;
     line-height: 0.9;
-    padding-top: 10vh; /* Adjust as needed for vertical position */
+    padding-top: 10vh;
 }
 
 .cloth-by {
-    /* Adjusted styling for the new, longer text */
+    /* Styles for the "CLOTHES BY SUIT FACTORY BANGKOK" text */
     font-size: 14px;
-    letter-spacing: 2px; /* Slightly reduced letter spacing for the longer phrase */
+    letter-spacing: 2px;
     color: #ffffff;
     margin-bottom: -15px;
     font-weight: 400;
-    /* Center the longer text above the logo */
     text-align: center; 
     padding: 0; 
 }
 
 .logo {
-    font-family: 'Italianno', cursive;
+    /* Styles for YOUR NAME */
+    font-family: 'Italianno', cursive; /* The script font for the brand name */
     font-size: 15vw; /* Large, responsive font size */
     color: #88c037; /* The bright lime green color */
     font-weight: 400;
@@ -79,7 +79,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 0 40px; /* Space between the two columns */
-    min-width: 250px; /* Ensure columns have enough space for link text */
+    min-width: 250px; 
 }
 
 .menu a {
@@ -87,9 +87,9 @@ body {
     text-decoration: none;
     font-size: 14px;
     letter-spacing: 2px;
-    line-height: 2.2; /* Spacing between menu items */
+    line-height: 2.2;
     transition: color 0.3s;
-    text-align: left; /* Align links to the left within their column */
+    text-align: left; 
 }
 
 .menu a:hover {
