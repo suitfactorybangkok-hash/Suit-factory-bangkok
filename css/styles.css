@@ -1,130 +1,101 @@
-/* css/style.css - Zenzoni-like hero replicate */
+/* Suit Factory Bangkok — Zenzoni.it exact replica */
 
-/* basic reset */
-* { box-sizing: border-box; }
-html,body { height:100%; margin:0; }
-
-/* Body base */
-body {
-  font-family: 'Montserrat', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background-color: #0e0b09; /* deep dark brown/near-black */
-  color: #fff;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  min-height:100vh;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #0f0c07;
+  background-image: repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.02) 2px,
+      transparent 2px,
+      transparent 4px
+  );
+  font-family: 'Montserrat', sans-serif;
+  color: #ffffff;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Textured background: subtle diagonal pattern + vignette */
-.hero {
-  min-height: 100vh;
-  display:flex;
-  align-items:flex-end; /* place logo lower (like Zenzoni) */
-  justify-content:center;
-  background:
-    repeating-linear-gradient(135deg, rgba(255,255,255,0.02) 0 2px, rgba(255,255,255,0) 2px 6px),
-    linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.25) 100%);
-  background-color: #120f0c;
-  padding: 10vh 20px 18vh; /* pushes the logo down like the reference */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
-/* centered container */
-.hero-inner {
-  width:100%;
-  max-width:980px;
-  margin:0 auto;
-  text-align:center;
+.title {
+  margin-bottom: 40px;
 }
 
-/* Brand styling */
-.brand {
-  display:inline-block;
-  text-decoration:none;
-  color:#b9ff3f; /* neon green */
-  margin-bottom: 24px;
-  transform: translateY(10%); /* slight lift to match feel */
-}
-
-.brand-small {
-  display:block;
-  font-size:12px;
-  color: rgba(255,255,255,0.6);
+.title .small-text {
+  font-size: 13px;
+  color: #cccccc;
   letter-spacing: 2px;
-  margin-bottom:6px;
-  font-weight:700;
+  margin: 0;
+  font-weight: 700;
 }
 
-.brand-name {
-  margin:0;
-  font-family: 'Great Vibes', serif;
-  font-size: 120px; /* large like Zenzoni */
-  line-height:0.85;
-  color:#b9ff3f;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+.title h1 {
+  font-family: 'Great Vibes', cursive;
+  color: #b9ff3f;
+  font-size: 90px;
+  font-weight: 400;
+  margin: 0;
 }
 
-/* Logo size on small screens */
-@media (max-width:520px) {
-  .brand-name { font-size:78px; }
-  .brand { transform:none; }
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 120px;
+  margin-top: 30px;
 }
 
-/* Links area in two columns */
-.hero-links {
-  display:flex;
-  justify-content:space-between;
-  gap: 4rem;
-  margin: 48px auto 18px;
-  width: 80%;
-  max-width:760px;
-  align-items:flex-start;
-}
-
-.hero-links .col {
-  display:flex;
-  flex-direction:column;
+.column {
+  display: flex;
+  flex-direction: column;
   gap: 14px;
 }
 
-.hero-links a {
+.column a {
+  text-decoration: none;
   color: #ffffff;
-  font-weight:700;
-  font-size:13px;
-  text-decoration:none;
+  font-weight: 700;
   letter-spacing: 1px;
-  text-transform:uppercase;
-  opacity:0.95;
+  font-size: 13px;
+  text-transform: uppercase;
+  transition: 0.3s;
 }
 
-.hero-links a:hover {
+.column a:hover {
   color: #b9ff3f;
-  text-decoration:underline;
 }
 
-/* Small red appointment CTA under the links */
-.cta-row { margin-top: 6px; }
-.appointment {
+.bottom-link {
+  margin-top: 30px;
+}
+
+.bottom-link a {
   color: #ff2b2b;
-  text-decoration:none;
-  font-weight:700;
-  letter-spacing:1px;
-  display:inline-block;
-  margin-top: 6px;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
-.appointment:hover {
-  color:#fff;
-  background: rgba(255,43,43,0.08);
-  border-radius:4px;
-  padding:2px 6px;
+.bottom-link a:hover {
+  color: #ffffff;
 }
 
-/* Responsive: stack columns on small screens and center */
-@media (max-width:780px) {
-  .hero-links {
-    flex-direction:column;
-    gap:18px;
-    align-items:center;
-    width: 90%;
+@media (max-width: 600px) {
+  .title h1 {
+    font-size: 60px;
   }
-  .hero-links .col { align-items:center; }
+  .links {
+    flex-direction: column;
+    gap: 20px;
+  }
 }
