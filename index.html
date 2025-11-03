@@ -1,35 +1,57 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Suit Factory Bangkok</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Fonts: script for logo + clean sans for text -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <div class="center-content">
-    <div class="brand">
-      <h1 class="logo">Suit <span>Factory</span></h1>
-      <p class="tagline">Custom Tailored Suits & Fine Fabrics</p>
-    </div>
+  <header class="hero">
+    <div class="hero-inner">
+      <!-- Logo: text using script font (replace with an <img> if you have a real logo) -->
+      <a class="brand" href="/">
+        <span class="brand-small">CLOTH BY</span>
+        <h1 class="brand-name">Suit Factory</h1>
+      </a>
 
-    <div class="links">
-      <div class="col">
-        <a href="#fabrics">Fabrics</a>
-        <a href="#blazers">Blazers</a>
-        <a href="#suits">Suits</a>
-      </div>
-      <div class="col">
-        <a href="#trousers">Trousers</a>
-        <a href="#ties">Ties</a>
-        <a href="#shirts">Shirt Styles</a>
+      <!-- Two column link layout below the logo -->
+      <nav class="hero-links" aria-label="Main links">
+        <div class="col">
+          <a href="#fabrics">Fabrics</a>
+          <a href="#tailored-jeans">Custom Tailored Jeans</a>
+          <a href="#lookbook">Lookbook</a>
+        </div>
+
+        <div class="col">
+          <a href="#accessories">Accessories</a>
+          <a href="#blazers">Blazers</a>
+          <a href="#company">Company Video</a>
+        </div>
+      </nav>
+
+      <!-- small red appointment link -->
+      <div class="cta-row">
+        <!-- change the number to your WhatsApp: +66 for Thailand -->
+        <a class="appointment" href="https://wa.me/66912345678" target="_blank" rel="noopener noreferrer">CLICK HERE FOR APPOINTMENT</a>
       </div>
     </div>
+  </header>
 
-    <a href="https://wa.me/66912345678" class="appointment">CLICK HERE FOR APPOINTMENT</a>
-  </div>
+  <!-- hidden anchors so links point somewhere while you build -->
+  <main style="display:none;">
+    <section id="fabrics"></section>
+    <section id="tailored-jeans"></section>
+    <section id="lookbook"></section>
+    <section id="accessories"></section>
+    <section id="blazers"></section>
+    <section id="company"></section>
+  </main>
 
 </body>
 </html>
