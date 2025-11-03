@@ -1,45 +1,223 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personalized Website Clone</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Suit Factory Bangkok</title>
+
+<!-- Google fonts (works when online) -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------- Reset ---------- */
+  :root{
+    --bg-dark:#0b0806;     /* deep brown/black */
+    --panel:#12100f;
+    --accent-green:#a6ff00; /* zenzoni-like green */
+    --text-white:#fffdf6;
+    --muted:#c9c0b9;
+    --red-cta:#d81b1b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+      repeating-linear-gradient( -45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, rgba(0,0,0,0.00) 2px, rgba(0,0,0,0.00) 6px),
+      var(--bg-dark);
+    color:var(--text-white);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 20px;
+  }
+
+  /* ---------- center wrapper ---------- */
+  .hero {
+    width:100%;
+    max-width:980px;
+    text-align:center;
+    padding:40px 20px;
+  }
+
+  /* big logo wordmark styled like Zenzoni */
+  .logo {
+    font-family: "Playfair Display", serif;
+    font-weight:400;
+    font-size:clamp(48px, 10vw, 120px);
+    color:var(--accent-green);
+    letter-spacing:1px;
+    line-height:0.85;
+    transform-origin:center;
+    margin:10vh 0 3vh;
+  }
+  .logo small {
+    display:block;
+    font-family: "Montserrat", sans-serif;
+    font-size:clamp(10px,1.2vw,14px);
+    color:var(--text-white);
+    opacity:0.85;
+    letter-spacing:2px;
+    margin-top:-12px;
+  }
+
+  /* two column links below the logo */
+  .links-row{
+    display:flex;
+    gap:40px;
+    justify-content:center;
+    margin-top:28px;
+    margin-bottom:22px;
+    flex-wrap:wrap;
+  }
+  .col {
+    min-width:220px;
+    flex:1 1 220px;
+    max-width:320px;
+    text-align:left;
+  }
+  .col ul {
+    list-style:none;
+  }
+  .col li{
+    margin:12px 0;
+    font-weight:700;
+    font-size:14px;
+    color:var(--text-white);
+    opacity:0.95;
+    letter-spacing:0.8px;
+  }
+  .col li a{
+    color:var(--text-white);
+    text-decoration:none;
+  }
+
+  /* center small red link */
+  .small-center{
+    text-align:center;
+    margin-top:22px;
+  }
+  .small-center a{
+    color:var(--red-cta);
+    font-weight:700;
+    font-size:13px;
+    text-decoration:none;
+    letter-spacing:0.6px;
+  }
+
+  /* top nav buttons row (for main site buttons like SUITS / BLAZERS) */
+  .top-nav{
+    position:fixed;
+    left:0;right:0;
+    top:18px;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    z-index:30;
+    pointer-events:auto;
+  }
+  .top-nav a{
+    background:transparent;
+    border:none;
+    color:var(--accent-green);
+    font-weight:700;
+    padding:8px 14px;
+    text-decoration:none;
+    font-size:15px;
+    letter-spacing:1px;
+    border-radius:8px;
+    transition:all .15s ease;
+  }
+  .top-nav a:hover{
+    transform:translateY(-3px);
+    text-shadow:0 1px 6px rgba(0,0,0,0.6);
+  }
+
+  /* appointment / footer area */
+  .cta-row{
+    margin-top:32px;
+    display:flex;
+    justify-content:center;
+    gap:18px;
+  }
+  .btn {
+    background:var(--accent-green);
+    color:#0b0b07;
+    padding:12px 22px;
+    font-weight:700;
+    border-radius:28px;
+    text-decoration:none;
+    box-shadow: 0 8px 30px rgba(166,255,0,0.08);
+  }
+  .btn[href^="tel"]{background:#fff;color:#000}
+
+  /* responsive tweaks */
+  @media (max-width:720px){
+    .col { text-align:center; }
+    .col ul { display:inline-block; text-align:left; }
+    .logo { margin-top:6vh; }
+    .top-nav{ top:12px; gap:10px; }
+  }
+
+  /* small credit line (optional) */
+  .credit{margin-top:40px;color:var(--muted);font-size:12px;text-align:center;}
+</style>
 </head>
 <body>
+  <!-- top nav (clickable main buttons) -->
+  <nav class="top-nav" aria-label="Main Navigation">
+    <a href="#suits">SUITS</a>
+    <a href="#blazers">BLAZERS</a>
+    <a href="#trousers">TROUSERS</a>
+    <a href="#fabrics">FABRICS</a>
+    <a href="#ties">TIES</a>
+    <a href="#shirts">SHIRTS</a>
+  </nav>
 
-    <header class="top-bar">
-        <div class="browser-info">
-            <span class="url-bar">https://yourwebsite.com</span>
-        </div>
-    </header>
+  <main class="hero" role="main" aria-labelledby="main-logo">
+    <!-- wordmark -->
+    <h1 id="main-logo" class="logo">
+      Suit Factory
+      <small>Bangkok — Custom Tailored Suits & Fine Fabrics</small>
+    </h1>
 
-    <main class="content">
-        <div class="logo-section">
-            <div class="cloth-by">CLOTHES By </div>
-            
-            <h1 class="logo">SUIT FACTORY BANGKOK </h1> 
-        </div>
+    <!-- two columns of links like Zenzoni -->
+    <div class="links-row" role="navigation" aria-label="Quick links">
+      <div class="col">
+        <ul>
+          <li><a href="#fabrics">FABRICS</a></li>
+          <li><a href="#custom-jeans">CUSTOM TAILORED JEANS</a></li>
+          <li><a href="#lookbook">LOOKBOOK</a></li>
+        </ul>
+      </div>
 
-        <nav class="menu">
-            <div class="menu-column left">
-                <a href="#">BUTTON 1 (Change Me)</a>
-                <a href="#">BUTTON 2 (Change Me)</a>
-                <a href="#">BUTTON 3 (Change Me)</a>
-            </div>
-            <div class="menu-column right">
-                <a href="#">BUTTON 4 (Change Me)</a>
-                <a href="#">BUTTON 5 (Change Me)</a>
-                <a href="#">BUTTON 6 (Change Me)</a>
-            </div>
-        </nav>
+      <div class="col">
+        <ul>
+          <li><a href="#accessories">ACCESSORIES</a></li>
+          <li><a href="#polos">CUSTOM TAILORED POLOS / GOLF SHIRTS</a></li>
+          <li><a href="#video">COMPANY PROFILE VIDEO</a></li>
+        </ul>
+      </div>
+    </div>
 
-        <p class="discontinued-link">
-            <a href="#">CLICK HERE FOR DISCONTINUED FABRIC LIST</a>
-        </p>
+    <!-- small red discontinued link centered -->
+    <div class="small-center">
+      <a href="#discontinued">CLICK HERE FOR DISCONTINUED FABRIC LIST</a>
+    </div>
 
-    </main>
+    <!-- Appointment / contact buttons -->
+    <div class="cta-row" style="margin-top:34px;">
+      <!-- replace phone number with your real number -->
+      <a class="btn" href="tel:+66XXXXXXXXX">CALL FOR APPOINTMENT</a>
+      <!-- WhatsApp (replace phone with full international number without +) -->
+      <a class="btn" href="https://wa.me/66XXXXXXXXX" target="_blank" rel="noopener">CHAT ON WHATSAPP</a>
+    </div>
+
+    <p class="credit">Made for Suit Factory Bangkok — change text, colors, links anytime</p>
+  </main>
 </body>
 </html>
