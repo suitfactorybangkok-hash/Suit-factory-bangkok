@@ -6,7 +6,7 @@
   <title>Suit Factory Bangkok</title>
 
   <style>
-    /* === Step 1: dark diagonal fabric texture (like Zenzoni) === */
+    /* === Step 2: glow behind logo + textured background === */
 
     :root {
       --bg-dark: #0a0a09;
@@ -23,8 +23,6 @@
       color: var(--text-white);
       text-align: center;
       background-color: var(--bg-dark);
-
-      /* diagonal texture background */
       background-image:
         repeating-linear-gradient(
           135deg,
@@ -34,7 +32,6 @@
           rgba(0,0,0,0) 8px
         ),
         linear-gradient(180deg, rgba(0,0,0,0.25), var(--overlay-dark));
-
       background-repeat: repeat;
       background-attachment: fixed;
       background-blend-mode: overlay;
@@ -50,11 +47,32 @@
       gap: 25px;
     }
 
+    /* glowing logo */
     .logo {
       font-family: "Great Vibes", cursive;
       font-size: 4rem;
       color: var(--accent-green);
       margin: 0;
+      text-shadow:
+        0 0 10px rgba(182,255,51,0.6),
+        0 0 20px rgba(182,255,51,0.4),
+        0 0 40px rgba(182,255,51,0.25);
+      animation: glowPulse 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      0% {
+        text-shadow:
+          0 0 8px rgba(182,255,51,0.4),
+          0 0 20px rgba(182,255,51,0.2),
+          0 0 30px rgba(182,255,51,0.15);
+      }
+      100% {
+        text-shadow:
+          0 0 14px rgba(182,255,51,0.8),
+          0 0 35px rgba(182,255,51,0.6),
+          0 0 60px rgba(182,255,51,0.4);
+      }
     }
 
     .menu {
