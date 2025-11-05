@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slim Fit Suits | Suit Factory Bangkok</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #ffffff;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
 
+    h1 {
+      font-family: 'Playfair Display', serif;
+      color: #b6ff00;
+      font-size: 3rem;
+      margin-top: 40px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 40px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 15px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    a.back {
+      display: inline-block;
+      color: #b6ff00;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 20px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Slim Fit Suits</h1>
+  <a href="index.html" class="back">← Back to Home</a>
+
+  <div class="gallery">
+    <img src="images/suit1.jpg" alt="Slim Fit Style 1">
+    <img src="images/suit2.jpg" alt="Slim Fit Style 2">
+    <img src="images/suit3.jpg" alt="Slim Fit Style 3">
+    <img src="images/suit4.jpg" alt="Slim Fit Style 4">
+  </div>
+
+</body>
+</html>
