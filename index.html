@@ -4,65 +4,146 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Suit Factory Bangkok</title>
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <header class="site-header">
-    <div class="container">
-      <h1 class="brand">Suit Factory</h1>
-      <p class="tag">Custom Tailored Suits & Fine Fabrics</p>
 
-      <div class="header-buttons">
-        <a class="btn btn-white" href="tel:+66643122029">CALL FOR APPOINTMENT</a>
-        <a class="btn btn-green" href="https://wa.me/66643122029" target="_blank" rel="noopener">CHAT ON WHATSAPP</a>
-      </div>
-    </div>
-  </header>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <main class="container">
-    <!-- Slim Fit card -->
-    <article class="card">
-      <a href="#slim" class="card-image-link">
-        <img src="images/slim1.jpg" alt="Slim Fit Suit">
-      </a>
-      <div class="card-body">
-        <h2>Slim Fit Suit</h2>
-        <p class="lead">Modern slim-fit design ideal for professionals and everyday wear.</p>
-        <!-- link to suit options (you can change href to suits.html later) -->
-        <p><a class="cta" href="suits.html">See Suits →</a></p>
-      </div>
-    </article>
+  <style>
+    :root{
+      --bg:#0d0d0d;
+      --neon:#b6ff00; /* neon green */
+      --muted:#dcdcdc;
+      --card-bg:#111111;
+      --accent:#e71c23; /* for any small accents if needed */
+      --radius:18px;
+    }
 
-    <!-- Blazer card -->
-    <article class="card">
-      <a href="#blazer" class="card-image-link">
-        <img src="images/blazer1.jpg" alt="Blazer Classic">
-      </a>
-      <div class="card-body">
-        <h2>Blazer / Classic</h2>
-        <p class="lead">Timeless elegance, tailored for comfort and confidence.</p>
-        <p><a class="cta" href="blazers.html">See Blazers →</a></p>
-      </div>
-    </article>
+    /* Reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      background:var(--bg);
+      color:var(--muted);
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
 
-    <!-- Fabrics card -->
-    <article class="card">
-      <a href="fabrics.html" class="card-image-link">
-        <img src="images/fabric1.jpg" alt="Fabrics sample">
-      </a>
-      <div class="card-body">
-        <h2>Fabrics</h2>
-        <p class="lead">Explore our fabric swatches and colors.</p>
-        <p><a class="cta" href="fabrics.html">Open Fabrics Catalog →</a></p>
-      </div>
-    </article>
+    .container{
+      max-width:980px;
+      margin:0 auto;
+      padding:28px 20px 80px;
+    }
 
-  </main>
+    /* Header */
+    .header{
+      text-align:center;
+      padding-top:8px;
+      padding-bottom:18px;
+    }
+    .title{
+      font-family:"Playfair Display", serif;
+      color:var(--neon);
+      font-size:66px;
+      line-height:0.95;
+      letter-spacing:0.5px;
+      margin-bottom:12px;
+      text-shadow: 0 2px 0 rgba(0,0,0,0.6);
+    }
+    .subtitle{
+      color: #dcdcdc;
+      font-size:18px;
+      margin-bottom:24px;
+    }
 
-  <footer class="site-footer">
-    <div class="container">
-      <p>Made for Suit Factory Bangkok — change text, colors, links anytime</p>
-    </div>
-  </footer>
-</body>
-</html>
+    /* Buttons row */
+    .btn-row{
+      display:flex;
+      gap:18px;
+      justify-content:center;
+      margin-bottom:34px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px 36px;
+      border-radius:48px;
+      font-weight:700;
+      text-decoration:none;
+      font-size:16px;
+      min-width:240px;
+      box-shadow:0 8px 18px rgba(0,0,0,0.6);
+    }
+    .btn-call{
+      background:#fff;
+      color:#111;
+    }
+    .btn-wa{
+      background:var(--neon);
+      color:#111;
+    }
+
+    /* Cards */
+    .cards{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:26px;
+      align-items:start;
+    }
+
+    .card{
+      background:var(--card-bg);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      color:var(--muted);
+    }
+
+    .card img{
+      width:100%;
+      display:block;
+      object-fit:cover;
+      height:320px;
+    }
+
+    .card-body{
+      padding:26px;
+      text-align:center;
+    }
+
+    .card-title{
+      color:var(--neon);
+      font-weight:700;
+      font-size:30px;
+      margin-bottom:12px;
+    }
+    .card-desc{
+      color:#cfcfcf;
+      font-size:16px;
+      max-width:920px;
+      margin:0 auto;
+      line-height:1.6;
+    }
+
+    /* Footer small */
+    .footer-note{
+      margin-top:34px;
+      text-align:center;
+      color:#bfc1c0;
+      font-size:14px;
+      opacity:0.9;
+    }
+
+    /* Responsive */
+    @media (min-width:720px){
+      .cards{
+        grid-template-columns:1fr 1fr;
+      }
+      .card img{ height:360px; }
+      .title{ font-size:86px; }
+    }
+    @media (min-width
+            
