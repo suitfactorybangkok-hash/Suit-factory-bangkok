@@ -1,149 +1,127 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Suit Factory Bangkok</title>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
   <style>
-    :root{
-      --bg:#0d0d0d;
-      --neon:#b6ff00; /* neon green */
-      --muted:#dcdcdc;
-      --card-bg:#111111;
-      --accent:#e71c23; /* for any small accents if needed */
-      --radius:18px;
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background-color: #0d0d0d;
+      color: #ffffff;
+      text-align: center;
     }
 
-    /* Reset */
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      background:var(--bg);
-      color:var(--muted);
-      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
+    h1 {
+      font-family: "Playfair Display", serif;
+      color: #b6ff00;
+      font-size: 3.5rem;
+      margin-top: 40px;
+      margin-bottom: 10px;
     }
 
-    .container{
-      max-width:980px;
-      margin:0 auto;
-      padding:28px 20px 80px;
-    }
-
-    /* Header */
-    .header{
-      text-align:center;
-      padding-top:8px;
-      padding-bottom:18px;
-    }
-    .title{
-      font-family:"Playfair Display", serif;
-      color:var(--neon);
-      font-size:66px;
-      line-height:0.95;
-      letter-spacing:0.5px;
-      margin-bottom:12px;
-      text-shadow: 0 2px 0 rgba(0,0,0,0.6);
-    }
-    .subtitle{
+    p.subtitle {
       color: #dcdcdc;
-      font-size:18px;
-      margin-bottom:24px;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
     }
 
-    /* Buttons row */
-    .btn-row{
-      display:flex;
-      gap:18px;
-      justify-content:center;
-      margin-bottom:34px;
-      flex-wrap:wrap;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:16px 36px;
-      border-radius:48px;
-      font-weight:700;
-      text-decoration:none;
-      font-size:16px;
-      min-width:240px;
-      box-shadow:0 8px 18px rgba(0,0,0,0.6);
-    }
-    .btn-call{
-      background:#fff;
-      color:#111;
-    }
-    .btn-wa{
-      background:var(--neon);
-      color:#111;
+    .buttons {
+      margin-bottom: 40px;
     }
 
-    /* Cards */
-    .cards{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:26px;
-      align-items:start;
+    .buttons a {
+      display: inline-block;
+      padding: 14px 28px;
+      margin: 8px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      color: #000;
+      background-color: #b6ff00;
+      transition: transform 0.2s ease;
     }
 
-    .card{
-      background:var(--card-bg);
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-      color:var(--muted);
+    .buttons a.call {
+      background-color: #fff;
     }
 
-    .card img{
-      width:100%;
-      display:block;
-      object-fit:cover;
-      height:320px;
+    .buttons a:hover {
+      transform: scale(1.05);
     }
 
-    .card-body{
-      padding:26px;
-      text-align:center;
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 60px;
     }
 
-    .card-title{
-      color:var(--neon);
-      font-weight:700;
-      font-size:30px;
-      margin-bottom:12px;
-    }
-    .card-desc{
-      color:#cfcfcf;
-      font-size:16px;
-      max-width:920px;
-      margin:0 auto;
-      line-height:1.6;
+    .card {
+      width: 90%;
+      max-width: 500px;
+      background-color: #121212;
+      border-radius: 18px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
     }
 
-    /* Footer small */
-    .footer-note{
-      margin-top:34px;
-      text-align:center;
-      color:#bfc1c0;
-      font-size:14px;
-      opacity:0.9;
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
     }
 
-    /* Responsive */
-    @media (min-width:720px){
-      .cards{
-        grid-template-columns:1fr 1fr;
-      }
-      .card img{ height:360px; }
-      .title{ font-size:86px; }
+    .card img:hover {
+      transform: scale(1.03);
     }
-    @media (min-width
-            
+
+    .card h2 {
+      color: #b6ff00;
+      margin: 15px 0 8px;
+      font-size: 1.5rem;
+    }
+
+    .card p {
+      color: #ccc;
+      font-size: 1rem;
+      padding: 0 15px 20px;
+    }
+
+    footer {
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Suit Factory</h1>
+  <p class="subtitle">Custom Tailored Suits & Fine Fabrics</p>
+
+  <div class="buttons">
+    <a href="tel:+66643122029" class="call">CALL FOR APPOINTMENT</a>
+    <a href="https://wa.me/66643122029" target="_blank">CHAT ON WHATSAPP</a>
+  </div>
+
+  <div class="gallery">
+    <div class="card">
+      <img src="images/navyslimcutsuits.jpg" alt="Slim Fit Suit" />
+      <h2>Slim Fit Suit</h2>
+      <p>Modern slim-fit design ideal for professionals and everyday wear.</p>
+    </div>
+
+    <div class="card">
+      <img src="images/blazer.jpg" alt="Blazer Classic" />
+      <h2>Blazer / Classic</h2>
+      <p>Timeless elegance in pure wool, tailored for comfort and confidence.</p>
+    </div>
+  </div>
+
+  <footer>Made for Suit Factory Bangkok — change text, colors, links anytime</footer>
+</body>
+</html>
