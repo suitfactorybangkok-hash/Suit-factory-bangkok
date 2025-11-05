@@ -1,129 +1,68 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Suit Factory Bangkok</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background-color: #0d0d0d;
-      color: #ffffff;
-      font-family: 'Poppins', sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-
-    h1 {
-      font-family: 'Playfair Display', serif;
-      color: #b6ff00;
-      font-size: 4rem;
-      margin-top: 80px;
-    }
-
-    h2 {
-      color: #b6ff00;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    p {
-      color: #dcdcdc;
-      font-size: 1rem;
-    }
-
-    a {
-      text-decoration: none;
-      color: #b6ff00;
-      font-weight: 600;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 15px 25px;
-      margin: 15px 10px;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .button:hover {
-      transform: scale(1.05);
-    }
-
-    .call {
-      background-color: #ffffff;
-      color: #000;
-    }
-
-    .whatsapp {
-      background-color: #b6ff00;
-      color: #000;
-    }
-
-    .section {
-      margin-top: 40px;
-    }
-
-    .product {
-      margin: 30px auto;
-      max-width: 350px;
-      border-radius: 20px;
-      overflow: hidden;
-      background-color: #121212;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    }
-
-    .product img {
-      width: 100%;
-      display: block;
-      transition: transform 0.3s ease;
-    }
-
-    .product img:hover {
-      transform: scale(1.05);
-    }
-
-    footer {
-      color: #bfbfbf;
-      font-size: 0.9rem;
-      margin: 50px 0;
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="brand">Suit Factory</h1>
+      <p class="tag">Custom Tailored Suits & Fine Fabrics</p>
 
-  <h1>Suit Factory</h1>
+      <div class="header-buttons">
+        <a class="btn btn-white" href="tel:+66643122029">CALL FOR APPOINTMENT</a>
+        <a class="btn btn-green" href="https://wa.me/66643122029" target="_blank" rel="noopener">CHAT ON WHATSAPP</a>
+      </div>
+    </div>
+  </header>
 
-  <div class="section">
-    <p>Custom Tailored Suits & Fine Fabrics</p>
+  <main class="container">
+    <!-- Slim Fit card -->
+    <article class="card">
+      <a href="#slim" class="card-image-link">
+        <img src="images/slim1.jpg" alt="Slim Fit Suit">
+      </a>
+      <div class="card-body">
+        <h2>Slim Fit Suit</h2>
+        <p class="lead">Modern slim-fit design ideal for professionals and everyday wear.</p>
+        <!-- link to suit options (you can change href to suits.html later) -->
+        <p><a class="cta" href="suits.html">See Suits →</a></p>
+      </div>
+    </article>
 
-    <a href="#" class="button call" onclick="window.location.href='tel:0643122029'">CALL FOR APPOINTMENT</a>
-    <a href="https://wa.me/66643122029" target="_blank" class="button whatsapp">CHAT ON WHATSAPP</a>
-  </div>
+    <!-- Blazer card -->
+    <article class="card">
+      <a href="#blazer" class="card-image-link">
+        <img src="images/blazer1.jpg" alt="Blazer Classic">
+      </a>
+      <div class="card-body">
+        <h2>Blazer / Classic</h2>
+        <p class="lead">Timeless elegance, tailored for comfort and confidence.</p>
+        <p><a class="cta" href="blazers.html">See Blazers →</a></p>
+      </div>
+    </article>
 
-  <div class="product">
-    <a href="suits.html">
-      <img src="images/navyslimcutsuits.jpg" alt="Slim Fit Suit">
-    </a>
-    <h2>Slim Fit Suit</h2>
-    <p>Modern slim-fit design ideal for professionals and everyday wear.</p>
-  </div>
+    <!-- Fabrics card -->
+    <article class="card">
+      <a href="fabrics.html" class="card-image-link">
+        <img src="images/fabric1.jpg" alt="Fabrics sample">
+      </a>
+      <div class="card-body">
+        <h2>Fabrics</h2>
+        <p class="lead">Explore our fabric swatches and colors.</p>
+        <p><a class="cta" href="fabrics.html">Open Fabrics Catalog →</a></p>
+      </div>
+    </article>
 
-  <div class="product">
-    <a href="blazer.html">
-      <img src="images/blazer.jpg" alt="Blazer Classic">
-    </a>
-    <h2>Blazer / Classic</h2>
-    <p>Timeless elegance in pure wool, tailored for comfort and confidence.</p>
-  </div>
+  </main>
 
-  <footer>
-    Made for Suit Factory Bangkok — change text, colors, links anytime
+  <footer class="site-footer">
+    <div class="container">
+      <p>Made for Suit Factory Bangkok — change text, colors, links anytime</p>
+    </div>
   </footer>
-
 </body>
 </html>
