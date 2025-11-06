@@ -72,13 +72,13 @@
       </div>
     </a>
 
-    <!-- Fabrics -->
-    <a class="card-link" href="#" data-gallery="fabrics">
+    <!-- Fabrics — opens Google Drive folder -->
+    <a class="card-link" href="https://drive.google.com/drive/folders/1XuiCNDd3Dk4M-apOL_ow7T3m5afQfVQ3" target="_blank" rel="noopener noreferrer">
       <div class="card">
         <img src="images/fab1.jpg" alt="Fabrics Collection">
         <div class="card-body">
           <h2>Fabrics Collection</h2>
-          <p>Discover premium materials for your custom suits. Tap to view swatches and fabric details.</p>
+          <p>Tap to open the full fabrics collection (opens Google Drive).</p>
         </div>
       </div>
     </a>
@@ -89,7 +89,7 @@
     Made for Suit Factory Bangkok — change text, colors, and links anytime.
   </footer>
 
-  <!-- Lightbox modal -->
+  <!-- Lightbox modal (used only for Slim & Blazer now) -->
   <div id="lightbox" class="lb" aria-hidden="true">
     <button id="lbClose" class="lb-close" aria-label="Close">&times;</button>
     <button id="lbPrev" class="lb-prev" aria-label="Previous">&#10094;</button>
@@ -104,31 +104,21 @@
   </div>
 
   <script>
-  /* ✅ Your galleries: update file names in these lists */
+  /* ---------------------------
+    GALLERIES: fabrics removed (use external link instead)
+  ----------------------------*/
   const GALLERIES = {
     slim: [
       "navyslimcutsuits.jpg"
+      // add more slim suit images here
     ],
     blazer: [
       "blazer.jpg"
-    ],
-    fabrics: [
-
-      "fab1.jpg",
-      "fab2.jpg",
-      "fab3.jpg",
-      "fab4.jpg",
-      "fab5.jpg",
-      "fab6.jpg",
-      "fab7.jpg",
-      "fab8.jpg",
-      "fab9.jpg",
-      "fab1.jpg",
-      "fab11.jpg",
+      // add more blazer images here
     ]
   };
 
-  /* 💡 Lightbox logic */
+  /* Lightbox logic (same as before) */
   const links = document.querySelectorAll('.card-link');
   const lb = document.getElementById('lightbox');
   const lbImage = document.getElementById('lbImage');
@@ -143,6 +133,14 @@
 
   links.forEach(link => {
     link.addEventListener('click', (e) => {
+      // If the card-link has a real href (external), let it open normally
+      const href = link.getAttribute('href');
+      const isExternal = href && href !== '#' && !href.startsWith('javascript:') && !link.dataset.gallery;
+      if (isExternal) {
+        // let browser open external link
+        return;
+      }
+
       e.preventDefault();
       const key = link.dataset.gallery;
       if (!key || !GALLERIES[key]) return;
