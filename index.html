@@ -89,7 +89,7 @@
     Made for Suit Factory Bangkok — change text, colors, and links anytime.
   </footer>
 
-  <!-- Lightbox modal (single, reused for each gallery) -->
+  <!-- Lightbox modal -->
   <div id="lightbox" class="lb" aria-hidden="true">
     <button id="lbClose" class="lb-close" aria-label="Close">&times;</button>
     <button id="lbPrev" class="lb-prev" aria-label="Previous">&#10094;</button>
@@ -104,29 +104,30 @@
   </div>
 
   <script>
-  /* ---------------------------
-    EDIT ONLY THIS PART: add the filenames you uploaded to /images/
-    Filenames must match exactly (case sensitive). Keep quotes and commas.
-  ----------------------------*/
-
+  /* ✅ Your galleries: update file names in these lists */
   const GALLERIES = {
     slim: [
       "navyslimcutsuits.jpg"
-      // add more slim suit images here, e.g. "slim2.jpg","slim3.jpg"
     ],
     blazer: [
       "blazer.jpg"
-      // add more blazer images here, e.g. "blazer2.jpg"
     ],
     fabrics: [
-      "1001.jpg"
-      // add more fabric images here, e.g. "fabric2.jpg","fabric3.jpg"
+      "1001.jpg",
+      "fab1.jpg",
+      "fab2.jpg",
+      "fab3.jpg",
+      "fab4.jpg",
+      "fab5.jpg",
+      "fab6.jpg",
+      "fab7.jpg",
+      "fab8.jpg",
+      "fab9.jpg",
+      "fab10.jpg"
     ]
   };
 
-  /* ---------------------------
-    Lightbox logic (no edits needed below)
-  ----------------------------*/
+  /* 💡 Lightbox logic */
   const links = document.querySelectorAll('.card-link');
   const lb = document.getElementById('lightbox');
   const lbImage = document.getElementById('lbImage');
@@ -139,14 +140,13 @@
   let activeGallery = [];
   let currentIndex = 0;
 
-  // Open gallery when card clicked
   links.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      const galleryKey = link.dataset.gallery;
-      if (!galleryKey || !GALLERIES[galleryKey]) return;
-      activeGallery = GALLERIES[galleryKey].slice(); // copy
-      if (activeGallery.length === 0) return; // nothing to show
+      const key = link.dataset.gallery;
+      if (!key || !GALLERIES[key]) return;
+      activeGallery = GALLERIES[key].slice();
+      if (activeGallery.length === 0) return;
       buildThumbs(activeGallery);
       openLightbox(0);
     });
@@ -155,12 +155,12 @@
   function buildThumbs(list) {
     lbThumbs.innerHTML = "";
     list.forEach((name, i) => {
-      const t = document.createElement('img');
-      t.src = "images/" + name;
-      t.alt = "Image " + (i+1);
-      t.dataset.index = i;
-      t.addEventListener('click', () => showImage(i));
-      lbThumbs.appendChild(t);
+      const img = document.createElement('img');
+      img.src = "images/" + name;
+      img.alt = "Image " + (i+1);
+      img.dataset.index = i;
+      img.addEventListener('click', () => showImage(i));
+      lbThumbs.appendChild(img);
     });
   }
 
@@ -181,38 +181,30 @@
   function openLightbox(start=0) {
     showImage(start);
     lb.classList.add('show');
-    lb.setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
   }
 
   function closeLightbox() {
     lb.classList.remove('show');
-    lb.setAttribute('aria-hidden','true');
     document.body.style.overflow = '';
   }
 
   function prevImage(){ showImage(currentIndex - 1); }
   function nextImage(){ showImage(currentIndex + 1); }
 
-  // Buttons
   lbPrev.addEventListener('click', prevImage);
   lbNext.addEventListener('click', nextImage);
   lbClose.addEventListener('click', closeLightbox);
-
-  // click outside to close
   lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
 
-  // swipe support
   let startX = 0;
   lbImage.addEventListener('touchstart', (e) => startX = e.changedTouches[0].clientX);
   lbImage.addEventListener('touchend', (e) => {
     const endX = e.changedTouches[0].clientX;
-    const diff = endX - startX;
-    if (diff > 40) prevImage();
-    else if (diff < -40) nextImage();
+    if (endX - startX > 40) prevImage();
+    else if (endX - startX < -40) nextImage();
   });
 
-  // keyboard support
   document.addEventListener('keydown', (e) => {
     if (!lb.classList.contains('show')) return;
     if (e.key === 'ArrowLeft') prevImage();
