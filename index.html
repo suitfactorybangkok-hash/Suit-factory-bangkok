@@ -36,6 +36,17 @@
     .lb-thumbs img{ width:72px; height:72px; object-fit:cover; border-radius:6px; cursor:pointer; opacity:.75; border:2px solid transparent; }
     .lb-thumbs img.active{ opacity:1; border-color:var(--accent); }
     @media(max-width:420px){ .lb-thumbs img{ width:56px; height:56px; } .lb-close,.lb-prev,.lb-next{ font-size:26px; padding:8px; } }
+
+    /* Fabrics selection modal */
+    .modal { display:none; position:fixed; inset:0; z-index:10010; background: rgba(0,0,0,0.6); align-items:center; justify-content:center; padding:18px; }
+    .modal.show { display:flex; }
+    .modal-card { background: #111; border-radius:12px; padding:18px; width:100%; max-width:420px; text-align:left; box-shadow:0 12px 40px rgba(0,0,0,0.6); color:#fff; }
+    .modal-card h3 { margin:0 0 10px; color:var(--accent); font-size:18px; }
+    .fabric-option { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:10px 0; padding:10px 12px; background:#0f0f0f; border-radius:8px; cursor:pointer; }
+    .fabric-option small { color:var(--muted); }
+    .modal-actions { margin-top:12px; display:flex; gap:10px; justify-content:flex-end; }
+    .btn { background:var(--accent); color:#000; border-radius:8px; padding:8px 12px; text-decoration:none; font-weight:600; }
+    .btn-ghost { background:transparent; border:1px solid #333; color:var(--muted); border-radius:8px; padding:8px 12px; cursor:pointer; }
   </style>
 </head>
 <body>
@@ -72,13 +83,13 @@
       </div>
     </a>
 
-    <!-- Fabrics — opens Google Drive folder -->
-    <a class="card-link" href="https://drive.google.com/drive/folders/1XuiCNDd3Dk4M-apOL_ow7T3m5afQfVQ3" target="_blank" rel="noopener noreferrer">
+    <!-- Fabrics — opens selection modal -->
+    <a class="card-link" href="#" id="fabricsCard">
       <div class="card">
         <img src="images/fab1.jpg" alt="Fabrics Collection">
         <div class="card-body">
           <h2>Fabrics Collection</h2>
-          <p>Tap to open the full fabrics collection (opens Google Drive).</p>
+          <p>Tap to choose fabric quality (10% / 50% / 80% wool blends).</p>
         </div>
       </div>
     </a>
@@ -89,7 +100,42 @@
     Made for Suit Factory Bangkok — change text, colors, and links anytime.
   </footer>
 
-  <!-- Lightbox modal (used only for Slim & Blazer now) -->
+  <!-- Fabrics selection modal -->
+  <div id="fabricModal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="fabricTitle">
+      <h3 id="fabricTitle">Choose fabric quality</h3>
+
+      <!-- Option: 10% wool -->
+      <div class="fabric-option" data-links='["https://drive.google.com/drive/folders/1XuiCNDd3Dk4M-apOL_ow7T3m5afQfVQ3"]'>
+        <div>
+          <strong>10% wool blend</strong><br><small>Lightweight, budget-friendly</small>
+        </div>
+        <div><small>Open</small></div>
+      </div>
+
+      <!-- Option: 50% wool (two links merged) -->
+      <div class="fabric-option" data-links='["https://drive.google.com/drive/folders/1dZTWVDVFE_uvJ3DZd0SWKmPy_yYcGjXE","https://drive.google.com/drive/folders/1EV9HMsmtFWGYX7Zoe8YkRzqlfsUhwOh_"]'>
+        <div>
+          <strong>50% wool blend</strong><br><small>Balanced quality & price</small>
+        </div>
+        <div><small>Open</small></div>
+      </div>
+
+      <!-- Option: 80% wool (two links merged) -->
+      <div class="fabric-option" data-links='["https://drive.google.com/drive/folders/1qpSgMdvMCH9bhsQqZF2RZwTX2zuUZUkU","https://drive.google.com/drive/folders/14LOexpoCnk7tNFwtacvLlaaUq0ZMUjjw"]'>
+        <div>
+          <strong>80% wool blend</strong><br><small>Premium feel & durability</small>
+        </div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-ghost" id="fabricCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox modal (used only for Slim & Blazer) -->
   <div id="lightbox" class="lb" aria-hidden="true">
     <button id="lbClose" class="lb-close" aria-label="Close">&times;</button>
     <button id="lbPrev" class="lb-prev" aria-label="Previous">&#10094;</button>
@@ -103,113 +149,158 @@
     <button id="lbNext" class="lb-next" aria-label="Next">&#10095;</button>
   </div>
 
-  <script>
-  /* ---------------------------
-    GALLERIES: fabrics removed (use external link instead)
-  ----------------------------*/
-  const GALLERIES = {
-    slim: [
-      "navyslimcutsuits.jpg"
-      // add more slim suit images here
-    ],
-    blazer: [
-      "blazer.jpg"
-      // add more blazer images here
-    ]
-  };
+<script>
+/* ---------------------------
+  GALLERIES: slim & blazer (fabrics now external)
+----------------------------*/
+const GALLERIES = {
+  slim: [
+    "navyslimcutsuits.jpg"
+    // add more slim suit images here
+  ],
+  blazer: [
+    "blazer.jpg"
+    // add more blazer images here
+  ]
+};
 
-  /* Lightbox logic (same as before) */
-  const links = document.querySelectorAll('.card-link');
-  const lb = document.getElementById('lightbox');
-  const lbImage = document.getElementById('lbImage');
-  const lbThumbs = document.getElementById('lbThumbs');
-  const lbCounter = document.getElementById('lbCounter');
-  const lbClose = document.getElementById('lbClose');
-  const lbPrev = document.getElementById('lbPrev');
-  const lbNext = document.getElementById('lbNext');
+/* ----- Lightbox logic (slim & blazer) ----- */
+const links = document.querySelectorAll('.card-link');
+const lb = document.getElementById('lightbox');
+const lbImage = document.getElementById('lbImage');
+const lbThumbs = document.getElementById('lbThumbs');
+const lbCounter = document.getElementById('lbCounter');
+const lbClose = document.getElementById('lbClose');
+const lbPrev = document.getElementById('lbPrev');
+const lbNext = document.getElementById('lbNext');
 
-  let activeGallery = [];
-  let currentIndex = 0;
+let activeGallery = [];
+let currentIndex = 0;
 
-  links.forEach(link => {
-    link.addEventListener('click', (e) => {
-      // If the card-link has a real href (external), let it open normally
-      const href = link.getAttribute('href');
-      const isExternal = href && href !== '#' && !href.startsWith('javascript:') && !link.dataset.gallery;
-      if (isExternal) {
-        // let browser open external link
-        return;
-      }
+links.forEach(link => {
+  // fabricsCard handled separately (opens modal)
+  if (link.id === 'fabricsCard') return;
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const key = link.dataset.gallery;
+    if (!key || !GALLERIES[key]) return;
+    activeGallery = GALLERIES[key].slice();
+    if (activeGallery.length === 0) return;
+    buildThumbs(activeGallery);
+    openLightbox(0);
+  });
+});
 
-      e.preventDefault();
-      const key = link.dataset.gallery;
-      if (!key || !GALLERIES[key]) return;
-      activeGallery = GALLERIES[key].slice();
-      if (activeGallery.length === 0) return;
-      buildThumbs(activeGallery);
-      openLightbox(0);
+function buildThumbs(list) {
+  lbThumbs.innerHTML = "";
+  list.forEach((name, i) => {
+    const img = document.createElement('img');
+    img.src = "images/" + name;
+    img.alt = "Image " + (i+1);
+    img.dataset.index = i;
+    img.addEventListener('click', () => showImage(i));
+    lbThumbs.appendChild(img);
+  });
+}
+
+function updateActiveThumb() {
+  Array.from(lbThumbs.children).forEach((el, idx) => {
+    el.classList.toggle('active', idx === currentIndex);
+  });
+  lbCounter.textContent = (currentIndex + 1) + " / " + activeGallery.length;
+}
+
+function showImage(i) {
+  currentIndex = (i + activeGallery.length) % activeGallery.length;
+  lbImage.src = "images/" + activeGallery[currentIndex];
+  lbImage.alt = "Image " + (currentIndex + 1);
+  updateActiveThumb();
+}
+
+function openLightbox(start=0) {
+  showImage(start);
+  lb.classList.add('show');
+  lb.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  lb.classList.remove('show');
+  lb.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+}
+function prevImage(){ showImage(currentIndex - 1); }
+function nextImage(){ showImage(currentIndex + 1); }
+
+lbPrev.addEventListener('click', prevImage);
+lbNext.addEventListener('click', nextImage);
+lbClose.addEventListener('click', closeLightbox);
+lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+
+let startX = 0;
+lbImage.addEventListener('touchstart', (e) => startX = e.changedTouches[0].clientX);
+lbImage.addEventListener('touchend', (e) => {
+  const endX = e.changedTouches[0].clientX;
+  const diff = endX - startX;
+  if (diff > 40) prevImage();
+  else if (diff < -40) nextImage();
+});
+document.addEventListener('keydown', (e) => {
+  if (!lb.classList.contains('show')) return;
+  if (e.key === 'ArrowLeft') prevImage();
+  if (e.key === 'ArrowRight') nextImage();
+  if (e.key === 'Escape') closeLightbox();
+});
+
+/* ----- Fabrics modal logic ----- */
+const fabricsCard = document.getElementById('fabricsCard');
+const fabricModal = document.getElementById('fabricModal');
+const fabricCancel = document.getElementById('fabricCancel');
+
+// open modal when fabrics card tapped
+fabricsCard.addEventListener('click', (e) => {
+  e.preventDefault();
+  fabricModal.classList.add('show');
+  fabricModal.setAttribute('aria-hidden','false');
+});
+
+// close modal
+fabricCancel.addEventListener('click', () => {
+  fabricModal.classList.remove('show');
+  fabricModal.setAttribute('aria-hidden','true');
+});
+
+// handle option clicks: each .fabric-option has data-links attribute (JSON array)
+document.querySelectorAll('.fabric-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const links = JSON.parse(opt.getAttribute('data-links') || '[]');
+    if (links.length === 0) {
+      fabricModal.classList.remove('show'); // nothing
+      return;
+    }
+    // Strategy: open first link in same tab, open additional links in new tabs
+    // This avoids most popup blockers on mobile.
+    const first = links[0];
+    const rest = links.slice(1);
+
+    // Close modal immediately
+    fabricModal.classList.remove('show');
+    fabricModal.setAttribute('aria-hidden','true');
+
+    // Open first link in same tab
+    window.location.href = first;
+
+    // Open rest in new tabs (delayed slightly to improve reliability)
+    rest.forEach((u, idx) => {
+      setTimeout(() => {
+        try { window.open(u, '_blank'); } catch(e) { /* ignore */ }
+      }, 300 * (idx+1));
     });
   });
+});
 
-  function buildThumbs(list) {
-    lbThumbs.innerHTML = "";
-    list.forEach((name, i) => {
-      const img = document.createElement('img');
-      img.src = "images/" + name;
-      img.alt = "Image " + (i+1);
-      img.dataset.index = i;
-      img.addEventListener('click', () => showImage(i));
-      lbThumbs.appendChild(img);
-    });
-  }
+// allow tapping outside modal to close
+fabricModal.addEventListener('click', (e) => { if (e.target === fabricModal) { fabricModal.classList.remove('show'); fabricModal.setAttribute('aria-hidden','true'); } });
 
-  function updateActiveThumb() {
-    Array.from(lbThumbs.children).forEach((el, idx) => {
-      el.classList.toggle('active', idx === currentIndex);
-    });
-    lbCounter.textContent = (currentIndex + 1) + " / " + activeGallery.length;
-  }
-
-  function showImage(i) {
-    currentIndex = (i + activeGallery.length) % activeGallery.length;
-    lbImage.src = "images/" + activeGallery[currentIndex];
-    lbImage.alt = "Image " + (currentIndex + 1);
-    updateActiveThumb();
-  }
-
-  function openLightbox(start=0) {
-    showImage(start);
-    lb.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    lb.classList.remove('show');
-    document.body.style.overflow = '';
-  }
-
-  function prevImage(){ showImage(currentIndex - 1); }
-  function nextImage(){ showImage(currentIndex + 1); }
-
-  lbPrev.addEventListener('click', prevImage);
-  lbNext.addEventListener('click', nextImage);
-  lbClose.addEventListener('click', closeLightbox);
-  lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
-
-  let startX = 0;
-  lbImage.addEventListener('touchstart', (e) => startX = e.changedTouches[0].clientX);
-  lbImage.addEventListener('touchend', (e) => {
-    const endX = e.changedTouches[0].clientX;
-    if (endX - startX > 40) prevImage();
-    else if (endX - startX < -40) nextImage();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (!lb.classList.contains('show')) return;
-    if (e.key === 'ArrowLeft') prevImage();
-    if (e.key === 'ArrowRight') nextImage();
-    if (e.key === 'Escape') closeLightbox();
-  });
-  </script>
+</script>
 </body>
 </html>
