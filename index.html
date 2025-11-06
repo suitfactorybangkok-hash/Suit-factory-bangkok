@@ -47,6 +47,14 @@
     .modal-actions { margin-top:12px; display:flex; gap:10px; justify-content:flex-end; }
     .btn { background:var(--accent); color:#000; border-radius:8px; padding:8px 12px; text-decoration:none; font-weight:600; }
     .btn-ghost { background:transparent; border:1px solid #333; color:var(--muted); border-radius:8px; padding:8px 12px; cursor:pointer; }
+
+    /* Catalog chooser */
+    .chooser { display:none; position:fixed; inset:0; z-index:10020; background: rgba(0,0,0,0.6); align-items:center; justify-content:center; padding:18px; }
+    .chooser.show { display:flex; }
+    .chooser-card { background:#111; border-radius:12px; padding:14px; width:100%; max-width:420px; color:#fff; }
+    .chooser-card h4 { color:var(--accent); margin:0 0 8px; }
+    .catalog-item { padding:10px; background:#0f0f0f; margin:8px 0; border-radius:8px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+    .catalog-item small { color:var(--muted); }
   </style>
 </head>
 <body>
@@ -61,7 +69,7 @@
 
   <div class="cards">
 
-    <!-- Slim Fit (click card to open Slim gallery) -->
+    <!-- Slim Fit -->
     <a class="card-link" href="#" data-gallery="slim">
       <div class="card">
         <img src="images/navyslimcutsuits.jpg" alt="Slim Fit Suit">
@@ -83,7 +91,7 @@
       </div>
     </a>
 
-    <!-- Fabrics — opens selection modal -->
+    <!-- Fabrics -->
     <a class="card-link" href="#" id="fabricsCard">
       <div class="card">
         <img src="images/fab1.jpg" alt="Fabrics Collection">
@@ -100,33 +108,33 @@
     Made for Suit Factory Bangkok — change text, colors, and links anytime.
   </footer>
 
-  <!-- Fabrics selection modal -->
+  <!-- Fabrics modal (choose % ) -->
   <div id="fabricModal" class="modal" aria-hidden="true">
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="fabricTitle">
       <h3 id="fabricTitle">Choose fabric quality</h3>
 
-      <!-- Option: 10% wool -->
-      <div class="fabric-option" data-links='["https://drive.google.com/drive/folders/1XuiCNDd3Dk4M-apOL_ow7T3m5afQfVQ3"]'>
+      <!-- 10% (single link) -->
+      <div class="fabric-option" data-links='["https://drive.google.com/drive/folders/1XuiCNDd3Dk4M-apOL_ow7T3m5afQfVQ3"]' data-names='["10% wool blend"]'>
         <div>
           <strong>10% wool blend</strong><br><small>Lightweight, budget-friendly</small>
         </div>
         <div><small>Open</small></div>
       </div>
 
-      <!-- Option: 50% wool (two links merged) -->
-      <div class="fabric-option" data-links='["https://drive.google.com/drive/folders/1dZTWVDVFE_uvJ3DZd0SWKmPy_yYcGjXE","https://drive.google.com/drive/folders/1EV9HMsmtFWGYX7Zoe8YkRzqlfsUhwOh_"]'>
+      <!-- 50% (two links, will show submenu if >1) -->
+      <div class="fabric-option" data-links='["https://drive.google.com/drive/folders/1dZTWVDVFE_uvJ3DZd0SWKmPy_yYcGjXE","https://drive.google.com/drive/folders/1EV9HMsmtFWGYX7Zoe8YkRzqlfsUhwOh_"]' data-names='["50% - Catalog A","50% - Catalog B"]'>
         <div>
           <strong>50% wool blend</strong><br><small>Balanced quality & price</small>
         </div>
-        <div><small>Open</small></div>
+        <div><small>Choose</small></div>
       </div>
 
-      <!-- Option: 80% wool (two links merged) -->
-      <div class="fabric-option" data-links='["https://drive.google.com/drive/folders/1qpSgMdvMCH9bhsQqZF2RZwTX2zuUZUkU","https://drive.google.com/drive/folders/14LOexpoCnk7tNFwtacvLlaaUq0ZMUjjw"]'>
+      <!-- 80% (two links, will show submenu) -->
+      <div class="fabric-option" data-links='["https://drive.google.com/drive/folders/1qpSgMdvMCH9bhsQqZF2RZwTX2zuUZUkU","https://drive.google.com/drive/folders/14LOexpoCnk7tNFwtacvLlaaUq0ZMUjjw"]' data-names='["80% - Catalog 1","80% - Catalog 2"]'>
         <div>
           <strong>80% wool blend</strong><br><small>Premium feel & durability</small>
         </div>
-        <div><small>Open</small></div>
+        <div><small>Choose</small></div>
       </div>
 
       <div class="modal-actions">
@@ -135,7 +143,18 @@
     </div>
   </div>
 
-  <!-- Lightbox modal (used only for Slim & Blazer) -->
+  <!-- Catalog chooser modal (if selected option has multiple links) -->
+  <div id="catalogChooser" class="chooser" aria-hidden="true">
+    <div class="chooser-card" role="dialog" aria-modal="true" aria-labelledby="chooserTitle">
+      <h4 id="chooserTitle">Choose catalog</h4>
+      <div id="catalogList"></div>
+      <div style="text-align:right;margin-top:10px">
+        <button class="btn-ghost" id="chooserClose">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox (slim & blazer) -->
   <div id="lightbox" class="lb" aria-hidden="true">
     <button id="lbClose" class="lb-close" aria-label="Close">&times;</button>
     <button id="lbPrev" class="lb-prev" aria-label="Previous">&#10094;</button>
@@ -151,17 +170,11 @@
 
 <script>
 /* ---------------------------
-  GALLERIES: slim & blazer (fabrics now external)
+  GALLERIES (slim & blazer)
 ----------------------------*/
 const GALLERIES = {
-  slim: [
-    "navyslimcutsuits.jpg"
-    // add more slim suit images here
-  ],
-  blazer: [
-    "blazer.jpg"
-    // add more blazer images here
-  ]
+  slim: ["navyslimcutsuits.jpg"],
+  blazer: ["blazer.jpg"]
 };
 
 /* ----- Lightbox logic (slim & blazer) ----- */
@@ -178,8 +191,7 @@ let activeGallery = [];
 let currentIndex = 0;
 
 links.forEach(link => {
-  // fabricsCard handled separately (opens modal)
-  if (link.id === 'fabricsCard') return;
+  if (link.id === 'fabricsCard') return; // fabrics handled separately
   link.addEventListener('click', (e) => {
     e.preventDefault();
     const key = link.dataset.gallery;
@@ -251,55 +263,71 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeLightbox();
 });
 
-/* ----- Fabrics modal logic ----- */
+/* ----- Fabrics modal & catalog chooser ----- */
 const fabricsCard = document.getElementById('fabricsCard');
 const fabricModal = document.getElementById('fabricModal');
 const fabricCancel = document.getElementById('fabricCancel');
+const catalogChooser = document.getElementById('catalogChooser');
+const catalogList = document.getElementById('catalogList');
+const chooserClose = document.getElementById('chooserClose');
 
-// open modal when fabrics card tapped
 fabricsCard.addEventListener('click', (e) => {
   e.preventDefault();
   fabricModal.classList.add('show');
   fabricModal.setAttribute('aria-hidden','false');
 });
 
-// close modal
 fabricCancel.addEventListener('click', () => {
   fabricModal.classList.remove('show');
   fabricModal.setAttribute('aria-hidden','true');
 });
 
-// handle option clicks: each .fabric-option has data-links attribute (JSON array)
+// when an option is clicked: if single link => open, if multiple => show chooser with labels
 document.querySelectorAll('.fabric-option').forEach(opt => {
   opt.addEventListener('click', () => {
     const links = JSON.parse(opt.getAttribute('data-links') || '[]');
-    if (links.length === 0) {
-      fabricModal.classList.remove('show'); // nothing
-      return;
-    }
-    // Strategy: open first link in same tab, open additional links in new tabs
-    // This avoids most popup blockers on mobile.
-    const first = links[0];
-    const rest = links.slice(1);
+    const names = JSON.parse(opt.getAttribute('data-names') || '[]');
 
-    // Close modal immediately
+    // close selection modal
     fabricModal.classList.remove('show');
     fabricModal.setAttribute('aria-hidden','true');
 
-    // Open first link in same tab
-    window.location.href = first;
+    if (links.length === 0) return;
 
-    // Open rest in new tabs (delayed slightly to improve reliability)
-    rest.forEach((u, idx) => {
-      setTimeout(() => {
-        try { window.open(u, '_blank'); } catch(e) { /* ignore */ }
-      }, 300 * (idx+1));
+    if (links.length === 1) {
+      // directly open single link in same tab
+      window.location.href = links[0];
+      return;
+    }
+
+    // multiple links -> show chooser with catalog items
+    catalogList.innerHTML = "";
+    links.forEach((u, idx) => {
+      const label = names[idx] || `Catalog ${idx+1}`;
+      const item = document.createElement('div');
+      item.className = 'catalog-item';
+      item.innerHTML = `<div><strong>${label}</strong><br><small>${u}</small></div><div><small>Open</small></div>`;
+      item.addEventListener('click', () => {
+        // open selected catalog (same tab)
+        window.location.href = u;
+      });
+      catalogList.appendChild(item);
     });
+
+    catalogChooser.classList.add('show');
+    catalogChooser.setAttribute('aria-hidden','false');
   });
 });
 
-// allow tapping outside modal to close
-fabricModal.addEventListener('click', (e) => { if (e.target === fabricModal) { fabricModal.classList.remove('show'); fabricModal.setAttribute('aria-hidden','true'); } });
+// close chooser
+chooserClose.addEventListener('click', () => {
+  catalogChooser.classList.remove('show');
+  catalogChooser.setAttribute('aria-hidden','true');
+});
+
+// clicking outside modals closes them
+fabricModal.addEventListener('click', (e) => { if (e.target === fabricModal) { fabricModal.classList.remove('show'); fabricModal.setAttribute('aria-hidden','true'); }});
+catalogChooser.addEventListener('click', (e) => { if (e.target === catalogChooser) { catalogChooser.classList.remove('show'); catalogChooser.setAttribute('aria-hidden','true'); }});
 
 </script>
 </body>
