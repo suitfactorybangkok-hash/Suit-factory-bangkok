@@ -3,268 +3,209 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Suit Factory Bangkok — Demo (Slim Grid)</title>
+  <title>Suit Factory Bangkok</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    :root{ --bg:#0d0d0d; --card:#111; --accent:#b6ff00; --muted:#ccc; --txt:#fff; --gap:12px; }
+    :root{ --bg:#0d0d0d; --card:#111; --accent:#b6ff00; --muted:#ccc; --txt:#fff; }
     body{ background:var(--bg); color:var(--txt); font-family:'Poppins',sans-serif; margin:0; padding:0; text-align:center;}
-    h1{ font-family:'Playfair Display',serif; color:var(--accent); font-size:2.6rem; margin:22px 0 6px;}
-    .subtitle{ color:var(--muted); margin-bottom:14px;}
-    .button-container{ display:flex; justify-content:center; gap:12px; margin-bottom:18px; flex-wrap:wrap;}
-    .button{ background:var(--accent); color:#000; padding:10px 16px; border-radius:28px; font-weight:600; text-decoration:none; }
-    .cards{ padding:0 12px 36px; max-width:980px; margin:0 auto; }
+    h1{ font-family:'Playfair Display',serif; color:var(--accent); font-size:3rem; margin:28px 0 6px;}
+    .subtitle{ color:var(--muted); margin-bottom:18px;}
+    .button-container{ display:flex; justify-content:center; gap:12px; margin-bottom:22px; flex-wrap:wrap;}
+    .button{ background:var(--accent); color:#000; padding:10px 18px; border-radius:28px; font-weight:600; text-decoration:none; }
+    .cards{ padding:0 12px 40px; max-width:980px; margin:0 auto; }
     .card-link{ display:block; text-decoration:none; color:inherit; }
-    .card{ background:var(--card); border-radius:14px; margin:14px auto; overflow:hidden; box-shadow:0 6px 22px rgba(0,0,0,0.6); max-width:720px; transition:transform .18s; }
+    .card{ background:var(--card); border-radius:16px; margin:18px auto; overflow:hidden; box-shadow:0 6px 22px rgba(0,0,0,0.6); max-width:720px; transition:transform .18s; }
     .card:hover{ transform:translateY(-4px); }
     .card img{ width:100%; height:auto; display:block; object-fit:cover; }
-    .card-body{ padding:12px 14px 18px; text-align:left; }
-    .card h2{ color:var(--accent); margin:6px 0; font-size:1.1rem; }
-    .card p{ color:var(--muted); margin:0; font-size:0.95rem; line-height:1.5; }
-    footer{ color:#777; margin:30px 0 40px; font-size:0.86rem; }
+    .card-body{ padding:14px 16px 20px; text-align:left; }
+    .card h2{ color:var(--accent); margin:6px 0; font-size:1.2rem; }
+    .card p{ color:var(--muted); margin:0; font-size:0.98rem; line-height:1.5; }
+    footer{ color:#777; margin:30px 0 40px; font-size:0.9rem; }
 
-    /* modal base */
-    .modal { display:none; position:fixed; inset:0; z-index:10010; background: rgba(0,0,0,0.7); align-items:center; justify-content:center; padding:18px; }
+    /* Modal Base Styles */
+    .modal { display:none; position:fixed; inset:0; z-index:10010; background: rgba(0,0,0,0.6); align-items:center; justify-content:center; padding:18px; }
     .modal.show { display:flex; }
-    .modal-card { background: #0f0f0f; border-radius:12px; padding:12px; width:100%; max-width:960px; text-align:left; box-shadow:0 12px 40px rgba(0,0,0,0.6); color:#fff; }
-
-    /* grid */
-    .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
-    .grid img{ width:100%; aspect-ratio: 4/5; object-fit:cover; border-radius:8px; display:block; cursor:pointer; box-shadow:0 8px 22px rgba(0,0,0,0.6); }
-    @media (max-width:760px){ .grid{ grid-template-columns:repeat(2,1fr);} }
-    @media (max-width:420px){ .grid{ grid-template-columns:repeat(1,1fr);} }
-
-    /* lightbox styles (reused) */
-    .lb { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:9999; align-items:center; justify-content:center; flex-direction:column; padding:12px; }
-    .lb.show{ display:flex; }
-    .lb-inner{ max-width:1100px; width:100%; display:flex; align-items:center; justify-content:center; position:relative; flex-direction:column; }
-    .lb-img{ max-width:100%; max-height:78vh; border-radius:8px; object-fit:contain; box-shadow:0 12px 40px rgba(0,0,0,0.7); }
-    .lb-close, .lb-prev, .lb-next{ position:absolute; background:transparent; border:none; color:#fff; font-size:34px; padding:10px; cursor:pointer; z-index:10001; }
-    .lb-close{ top:14px; right:14px; font-size:36px; }
-    .lb-prev{ left:8px; top:50%; transform:translateY(-50%); }
-    .lb-next{ right:8px; top:50%; transform:translateY(-50%); }
-    .lb-counter{ color:var(--muted); margin-top:10px; font-size:13px; }
-    .lb-thumbs{ display:flex; gap:8px; overflow-x:auto; padding:10px 6px; margin-top:12px; max-width:95%; }
-    .lb-thumbs img{ width:64px; height:64px; object-fit:cover; border-radius:6px; cursor:pointer; opacity:.75; border:2px solid transparent; }
-    .lb-thumbs img.active{ opacity:1; border-color:var(--accent); }
-
-    .modal-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-    .modal-head h3{ margin:0; color:var(--accent); font-size:1.1rem;}
-    .btn-ghost{ background:transparent; border:1px solid #2a2a2a; color:var(--muted); padding:8px 10px; border-radius:8px; cursor:pointer; }
+    .modal-card { background: #111; border-radius:12px; padding:18px; width:100%; max-width:420px; text-align:left; box-shadow:0 12px 40px rgba(0,0,0,0.6); color:#fff; }
+    .modal-card h3 { margin:0 0 10px; color:var(--accent); font-size:18px; }
+    .option { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:10px 0; padding:10px 12px; background:#0f0f0f; border-radius:8px; cursor:pointer; }
+    .option small { color:var(--muted); }
+    .modal-actions { margin-top:12px; display:flex; gap:10px; justify-content:flex-end; }
+    .btn { background:var(--accent); color:#000; border-radius:8px; padding:8px 12px; text-decoration:none; font-weight:600; }
+    .btn-ghost { background:transparent; border:1px solid #333; color:var(--muted); border-radius:8px; padding:8px 12px; cursor:pointer; }
   </style>
 </head>
 <body>
 
   <h1>Suit Factory</h1>
-  <p class="subtitle">Premium Slim Fit Suits — tap to explore the collection</p>
+  <p class="subtitle">Custom Tailored Suits & Fine Fabrics</p>
 
   <div class="button-container">
-    <a class="button" href="tel:+66643122029">Call</a>
-    <a class="button" href="https://wa.me/66643122029" target="_blank">WhatsApp</a>
+    <a class="button" href="tel:+66643122029">Call for Appointment</a>
+    <a class="button" href="https://wa.me/66643122029" target="_blank">Chat on WhatsApp</a>
   </div>
 
   <div class="cards">
-    <!-- Slim card (opens grid modal) -->
+
+    <!-- Slim Fit -->
     <a class="card-link" href="#" id="slimCard">
       <div class="card">
         <img src="images/navyslimcutsuits.jpg" alt="Slim Fit Suit">
         <div class="card-body">
           <h2>Slim Fit Suit</h2>
-          <p>Tap to view photo catalog — clean grid, easy to browse on mobile.</p>
+          <p>Tap to view our suit collections — men's & women's styles.</p>
         </div>
       </div>
     </a>
 
-    <!-- Other cards kept minimal for demo -->
+    <!-- Luxury Neck Ties (updated with tie1.jpg) -->
     <a class="card-link" href="#" id="tiesCard">
       <div class="card">
-        <img src="images/tie1.jpg" alt="Ties">
+        <img src="images/tie1.jpg" alt="Luxury Neck Ties">
         <div class="card-body">
           <h2>Luxury Neck Ties</h2>
-          <p>Choose tie width and view catalogs.</p>
+          <p>Choose tie width and view the catalogs (8.5cm / 7.5cm).</p>
         </div>
       </div>
     </a>
 
+    <!-- Fabrics -->
     <a class="card-link" href="#" id="fabricsCard">
       <div class="card">
-        <img src="images/fab1.jpg" alt="Fabrics">
+        <img src="images/fab1.jpg" alt="Fabrics Collection">
         <div class="card-body">
           <h2>Fabrics Collection</h2>
-          <p>Tap to choose fabric quality (10% / 50% / 80% blends).</p>
+          <p>Tap to choose fabric quality (10% / 50% / 80% wool blends).</p>
         </div>
       </div>
     </a>
+
   </div>
 
-  <footer>Made for Suit Factory Bangkok — professional galleries coming soon.</footer>
+  <footer>
+    Made for Suit Factory Bangkok — change text, colors, and links anytime.
+  </footer>
 
-  <!-- SLIM GRID MODAL -->
-  <div id="slimModal" class="modal" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true">
-      <div class="modal-head">
-        <h3>Slim Fit — Photo Catalog</h3>
-        <button id="closeSlim" class="btn-ghost">Close</button>
+  <!-- Slim suit modal -->
+  <div id="suitModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h3>Choose a suit collection</h3>
+
+      <div class="option" data-link="https://drive.google.com/drive/folders/1rmccU3BaSvzKr5k_UH6kbebDPDmJB1I9">
+        <div><strong>Suit Collection 1</strong><br><small>Modern styles & textures</small></div>
+        <div><small>Open</small></div>
       </div>
 
-      <div id="slimGrid" class="grid">
-        <!-- Thumbnails inserted by JS -->
+      <div class="option" data-link="https://drive.google.com/drive/folders/1ytPSEbeUTF1WNe6aQl9JP3rkEGjfDbJD">
+        <div><strong>Suit Collection 2</strong><br><small>Elegant classic options</small></div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="option" data-link="https://drive.google.com/drive/folders/1dd4dbl49qyXf28a4QF-bb-aRPy3MdplT">
+        <div><strong>Suit Collection 3</strong><br><small>Premium and limited fabrics</small></div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="option" data-link="https://drive.google.com/drive/folders/1iN_eZNQv6Y7lVii2TlW1_jsnmHmNjWbL">
+        <div><strong>Women Suit Collection</strong><br><small>Elegant designs for women</small></div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-ghost" id="suitCancel">Cancel</button>
       </div>
     </div>
   </div>
 
-  <!-- REUSABLE LIGHTBOX -->
-  <div id="lightbox" class="lb" aria-hidden="true">
-    <button id="lbClose" class="lb-close" aria-label="Close">&times;</button>
-    <button id="lbPrev" class="lb-prev" aria-label="Previous">&#10094;</button>
+  <!-- Ties modal -->
+  <div id="tiesModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h3>Choose tie catalog</h3>
 
-    <div class="lb-inner" role="dialog" aria-modal="true">
-      <img id="lbImage" class="lb-img" src="" alt="Gallery image">
-      <div id="lbCounter" class="lb-counter"></div>
-      <div id="lbThumbs" class="lb-thumbs" aria-hidden="false"></div>
+      <div class="option" data-link="https://drive.google.com/drive/folders/1XKEE95BfEOWd5IrrPHw-NVF6-tgfOWLB">
+        <div><strong>Luxury Neck Ties — 8.5cm</strong><br><small>Classic wider style</small></div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="option" data-link="https://drive.google.com/drive/folders/1-39aLtwPRHgLe_T4lsFyuVFQHoGvE_6U">
+        <div><strong>Luxury Neck Ties — 7.5cm</strong><br><small>Slimmer modern style</small></div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-ghost" id="tiesCancel">Cancel</button>
+      </div>
     </div>
+  </div>
 
-    <button id="lbNext" class="lb-next" aria-label="Next">&#10095;</button>
+  <!-- Fabrics modal -->
+  <div id="fabricModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h3>Choose fabric quality</h3>
+
+      <div class="option fabric-option" data-links='["https://drive.google.com/drive/folders/1XuiCNDd3Dk4M-apOL_ow7T3m5afQfVQ3"]' data-names='["10% wool blend"]'>
+        <div><strong>10% wool blend</strong><br><small>Lightweight, budget-friendly</small></div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="option fabric-option" data-links='["https://drive.google.com/drive/folders/1dZTWVDVFE_uvJ3DZd0SWKmPy_yYcGjXE","https://drive.google.com/drive/folders/1EV9HMsmtFWGYX7Zoe8YkRzqlfsUhwOh_"]' data-names='["50% - Catalog A","50% - Catalog B"]'>
+        <div><strong>50% wool blend</strong><br><small>Balanced quality & price</small></div>
+        <div><small>Choose</small></div>
+      </div>
+
+      <div class="option fabric-option" data-links='["https://drive.google.com/drive/folders/1qpSgMdvMCH9bhsQqZF2RZwTX2zuUZUkU","https://drive.google.com/drive/folders/14LOexpoCnk7tNFwtacvLlaaUq0ZMUjjw"]' data-names='["80% - Catalog 1","80% - Catalog 2"]'>
+        <div><strong>80% wool blend</strong><br><small>Premium feel & durability</small></div>
+        <div><small>Choose</small></div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-ghost" id="fabricCancel">Cancel</button>
+      </div>
+    </div>
   </div>
 
 <script>
-/* ========== CONFIG: edit these filenames to the images you upload ========== */
-/* Upload these files to /images/ on your repo:
-   slim1.jpg, slim2.jpg, slim3.jpg, slim4.jpg, slim5.jpg, slim6.jpg, slim7.jpg, slim8.jpg
-   (You can add/remove names — keep the list updated)
-*/
-const SLIM_IMAGES = [
-  "slim1.jpg",
-  "slim2.jpg",
-  "slim3.jpg",
-  "slim4.jpg",
-  "slim5.jpg",
-  "slim6.jpg",
-  "slim7.jpg",
-  "slim8.jpg"
-];
-
-/* ---------- UI hooks ---------- */
+/* --- Slim modal --- */
 const slimCard = document.getElementById('slimCard');
-const slimModal = document.getElementById('slimModal');
-const closeSlim = document.getElementById('closeSlim');
-const slimGrid = document.getElementById('slimGrid');
-
-/* lightbox elements (reusable) */
-const lb = document.getElementById('lightbox');
-const lbImage = document.getElementById('lbImage');
-const lbThumbs = document.getElementById('lbThumbs');
-const lbCounter = document.getElementById('lbCounter');
-const lbClose = document.getElementById('lbClose');
-const lbPrev = document.getElementById('lbPrev');
-const lbNext = document.getElementById('lbNext');
-
-let activeGallery = [];
-let currentIndex = 0;
-
-/* Build the grid thumbnails */
-function buildSlimGrid() {
-  slimGrid.innerHTML = "";
-  SLIM_IMAGES.forEach((name, idx) => {
-    const img = document.createElement('img');
-    img.src = "images/" + name;
-    img.alt = `Slim ${idx+1}`;
-    img.dataset.index = idx;
-    img.loading = "lazy";
-    img.addEventListener('click', () => openLightboxFromGrid(idx));
-    slimGrid.appendChild(img);
-  });
-}
-
-/* Open modal & populate grid (call when user taps Slim card) */
-slimCard.addEventListener('click', (e) => {
-  e.preventDefault();
-  buildSlimGrid();
-  slimModal.classList.add('show');
-  slimModal.setAttribute('aria-hidden','false');
+const suitModal = document.getElementById('suitModal');
+const suitCancel = document.getElementById('suitCancel');
+slimCard.addEventListener('click', (e)=>{ e.preventDefault(); suitModal.classList.add('show'); });
+suitCancel.addEventListener('click', ()=>{ suitModal.classList.remove('show'); });
+document.querySelectorAll('#suitModal .option').forEach(opt=>{
+  opt.addEventListener('click', ()=>{ const url=opt.getAttribute('data-link'); if(url) window.location.href=url; });
 });
+suitModal.addEventListener('click',(e)=>{ if(e.target===suitModal) suitModal.classList.remove('show'); });
 
-/* Close slim modal */
-closeSlim.addEventListener('click', () => {
-  slimModal.classList.remove('show');
-  slimModal.setAttribute('aria-hidden','true');
+/* --- Ties modal --- */
+const tiesCard=document.getElementById('tiesCard');
+const tiesModal=document.getElementById('tiesModal');
+const tiesCancel=document.getElementById('tiesCancel');
+tiesCard.addEventListener('click',(e)=>{ e.preventDefault(); tiesModal.classList.add('show'); });
+tiesCancel.addEventListener('click',()=>{ tiesModal.classList.remove('show'); });
+document.querySelectorAll('#tiesModal .option').forEach(opt=>{
+  opt.addEventListener('click',()=>{ const url=opt.getAttribute('data-link'); if(url) window.location.href=url; });
 });
-slimModal.addEventListener('click', (e) => { if (e.target === slimModal) { slimModal.classList.remove('show'); slimModal.setAttribute('aria-hidden','true'); } });
+tiesModal.addEventListener('click',(e)=>{ if(e.target===tiesModal) tiesModal.classList.remove('show'); });
 
-/* ---------- Lightbox logic (reused) ---------- */
-function buildThumbs(list) {
-  lbThumbs.innerHTML = "";
-  list.forEach((name, i) => {
-    const t = document.createElement('img');
-    t.src = "images/" + name;
-    t.alt = "Thumb " + (i+1);
-    t.dataset.index = i;
-    t.addEventListener('click', () => showImage(i));
-    lbThumbs.appendChild(t);
+/* --- Fabrics modal & chooser --- */
+const fabricsCard=document.getElementById('fabricsCard');
+const fabricModal=document.getElementById('fabricModal');
+const fabricCancel=document.getElementById('fabricCancel');
+fabricsCard.addEventListener('click',(e)=>{ e.preventDefault(); fabricModal.classList.add('show'); });
+fabricCancel.addEventListener('click',()=>{ fabricModal.classList.remove('show'); });
+document.querySelectorAll('.fabric-option').forEach(opt=>{
+  opt.addEventListener('click',()=>{
+    const links=JSON.parse(opt.getAttribute('data-links')||'[]');
+    const names=JSON.parse(opt.getAttribute('data-names')||'[]');
+    fabricModal.classList.remove('show');
+    if(links.length===1){ window.location.href=links[0]; return; }
+    const chooser=document.createElement('div');
+    chooser.className='modal show';
+    chooser.innerHTML=`<div class="modal-card"><h3>Choose catalog</h3>${links.map((u,i)=>`<div class="option" data-link="${u}"><div><strong>${names[i]||('Catalog '+(i+1))}</strong></div><div><small>Open</small></div></div>`).join('')}<div class="modal-actions"><button class="btn-ghost" id="closeChooser">Back</button></div></div>`;
+    document.body.appendChild(chooser);
+    chooser.querySelectorAll('[data-link]').forEach(div=>div.addEventListener('click',()=>window.location.href=div.getAttribute('data-link')));
+    chooser.querySelector('#closeChooser').addEventListener('click',()=>chooser.remove());
+    chooser.addEventListener('click',e=>{ if(e.target===chooser) chooser.remove(); });
   });
-}
-
-function updateActiveThumb() {
-  Array.from(lbThumbs.children).forEach((el, idx) => {
-    el.classList.toggle('active', idx === currentIndex);
-  });
-  lbCounter.textContent = (currentIndex + 1) + " / " + activeGallery.length;
-}
-
-function showImage(i) {
-  currentIndex = (i + activeGallery.length) % activeGallery.length;
-  lbImage.src = "images/" + activeGallery[currentIndex];
-  lbImage.alt = "Image " + (currentIndex + 1);
-  updateActiveThumb();
-}
-
-function openLightbox(start=0) {
-  showImage(start);
-  lb.classList.add('show');
-  lb.setAttribute('aria-hidden','false');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeLightbox() {
-  lb.classList.remove('show');
-  lb.setAttribute('aria-hidden','true');
-  document.body.style.overflow = '';
-}
-
-function prevImage(){ showImage(currentIndex - 1); }
-function nextImage(){ showImage(currentIndex + 1); }
-
-/* When opening from the Slim grid: set activeGallery = SLIM_IMAGES and open lightbox */
-function openLightboxFromGrid(idx) {
-  activeGallery = SLIM_IMAGES.slice();
-  buildThumbs(activeGallery);
-  openLightbox(idx);
-  // close the grid modal
-  slimModal.classList.remove('show');
-  slimModal.setAttribute('aria-hidden','true');
-}
-
-/* Lightbox buttons */
-lbPrev.addEventListener('click', prevImage);
-lbNext.addEventListener('click', nextImage);
-lbClose.addEventListener('click', closeLightbox);
-lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
-
-/* swipe */
-let startX = 0;
-lbImage.addEventListener('touchstart', (e) => startX = e.changedTouches[0].clientX);
-lbImage.addEventListener('touchend', (e) => {
-  const endX = e.changedTouches[0].clientX;
-  const diff = endX - startX;
-  if (diff > 40) prevImage();
-  else if (diff < -40) nextImage();
-});
-
-/* keyboard */
-document.addEventListener('keydown', (e) => {
-  if (!lb.classList.contains('show')) return;
-  if (e.key === 'ArrowLeft') prevImage();
-  if (e.key === 'ArrowRight') nextImage();
-  if (e.key === 'Escape') closeLightbox();
 });
 </script>
 </body>
