@@ -22,39 +22,16 @@
     .card p{ color:var(--muted); margin:0; font-size:0.98rem; line-height:1.5; }
     footer{ color:#777; margin:30px 0 40px; font-size:0.9rem; }
 
-    /* Lightbox styles */
-    .lb { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:9999; align-items:center; justify-content:center; flex-direction:column; padding:12px; }
-    .lb.show{ display:flex; }
-    .lb-inner{ max-width:1100px; width:100%; display:flex; align-items:center; justify-content:center; position:relative; flex-direction:column; }
-    .lb-img{ max-width:100%; max-height:72vh; border-radius:8px; object-fit:contain; box-shadow:0 12px 40px rgba(0,0,0,0.7); }
-    .lb-close, .lb-prev, .lb-next{ position:absolute; background:transparent; border:none; color:#fff; font-size:32px; padding:10px; cursor:pointer; z-index:10001; }
-    .lb-close{ top:14px; right:14px; font-size:36px; }
-    .lb-prev{ left:6px; top:50%; transform:translateY(-50%); }
-    .lb-next{ right:6px; top:50%; transform:translateY(-50%); }
-    .lb-counter{ color:var(--muted); margin-top:8px; font-size:14px; }
-    .lb-thumbs{ display:flex; gap:8px; overflow-x:auto; padding:10px 6px; margin-top:12px; max-width:100%; }
-    .lb-thumbs img{ width:72px; height:72px; object-fit:cover; border-radius:6px; cursor:pointer; opacity:.75; border:2px solid transparent; }
-    .lb-thumbs img.active{ opacity:1; border-color:var(--accent); }
-    @media(max-width:420px){ .lb-thumbs img{ width:56px; height:56px; } .lb-close,.lb-prev,.lb-next{ font-size:26px; padding:8px; } }
-
-    /* Fabrics selection modal */
+    /* Modal Base Styles */
     .modal { display:none; position:fixed; inset:0; z-index:10010; background: rgba(0,0,0,0.6); align-items:center; justify-content:center; padding:18px; }
     .modal.show { display:flex; }
     .modal-card { background: #111; border-radius:12px; padding:18px; width:100%; max-width:420px; text-align:left; box-shadow:0 12px 40px rgba(0,0,0,0.6); color:#fff; }
     .modal-card h3 { margin:0 0 10px; color:var(--accent); font-size:18px; }
-    .fabric-option { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:10px 0; padding:10px 12px; background:#0f0f0f; border-radius:8px; cursor:pointer; }
-    .fabric-option small { color:var(--muted); }
+    .option { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:10px 0; padding:10px 12px; background:#0f0f0f; border-radius:8px; cursor:pointer; }
+    .option small { color:var(--muted); }
     .modal-actions { margin-top:12px; display:flex; gap:10px; justify-content:flex-end; }
     .btn { background:var(--accent); color:#000; border-radius:8px; padding:8px 12px; text-decoration:none; font-weight:600; }
     .btn-ghost { background:transparent; border:1px solid #333; color:var(--muted); border-radius:8px; padding:8px 12px; cursor:pointer; }
-
-    /* Catalog chooser */
-    .chooser { display:none; position:fixed; inset:0; z-index:10020; background: rgba(0,0,0,0.6); align-items:center; justify-content:center; padding:18px; }
-    .chooser.show { display:flex; }
-    .chooser-card { background:#111; border-radius:12px; padding:14px; width:100%; max-width:420px; color:#fff; }
-    .chooser-card h4 { color:var(--accent); margin:0 0 8px; }
-    .catalog-item { padding:10px; background:#0f0f0f; margin:8px 0; border-radius:8px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
-    .catalog-item small { color:var(--muted); }
   </style>
 </head>
 <body>
@@ -70,23 +47,23 @@
   <div class="cards">
 
     <!-- Slim Fit -->
-    <a class="card-link" href="#" data-gallery="slim">
+    <a class="card-link" href="#" id="slimCard">
       <div class="card">
         <img src="images/navyslimcutsuits.jpg" alt="Slim Fit Suit">
         <div class="card-body">
           <h2>Slim Fit Suit</h2>
-          <p>Modern slim-fit design ideal for professionals and everyday wear. Tap to view more photos.</p>
+          <p>Tap to view our suit collections — men's & women's styles.</p>
         </div>
       </div>
     </a>
 
-    <!-- Blazer -->
-    <a class="card-link" href="#" data-gallery="blazer">
+    <!-- Luxury Neck Ties (updated with tie1.jpg) -->
+    <a class="card-link" href="#" id="tiesCard">
       <div class="card">
-        <img src="images/blazer.jpg" alt="Blazer Classic">
+        <img src="images/tie1.jpg" alt="Luxury Neck Ties">
         <div class="card-body">
-          <h2>Blazer / Classic</h2>
-          <p>Timeless elegance in pure wool, tailored for comfort and confidence. Tap to view more photos.</p>
+          <h2>Luxury Neck Ties</h2>
+          <p>Choose tie width and view the catalogs (8.5cm / 7.5cm).</p>
         </div>
       </div>
     </a>
@@ -108,32 +85,75 @@
     Made for Suit Factory Bangkok — change text, colors, and links anytime.
   </footer>
 
-  <!-- Fabrics modal (choose % ) -->
-  <div id="fabricModal" class="modal" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="fabricTitle">
-      <h3 id="fabricTitle">Choose fabric quality</h3>
+  <!-- Slim suit modal -->
+  <div id="suitModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h3>Choose a suit collection</h3>
 
-      <!-- 10% (single link) -->
-      <div class="fabric-option" data-links='["https://drive.google.com/drive/folders/1XuiCNDd3Dk4M-apOL_ow7T3m5afQfVQ3"]' data-names='["10% wool blend"]'>
-        <div>
-          <strong>10% wool blend</strong><br><small>Lightweight, budget-friendly</small>
-        </div>
+      <div class="option" data-link="https://drive.google.com/drive/folders/1rmccU3BaSvzKr5k_UH6kbebDPDmJB1I9">
+        <div><strong>Suit Collection 1</strong><br><small>Modern styles & textures</small></div>
         <div><small>Open</small></div>
       </div>
 
-      <!-- 50% (two links, will show submenu if >1) -->
-      <div class="fabric-option" data-links='["https://drive.google.com/drive/folders/1dZTWVDVFE_uvJ3DZd0SWKmPy_yYcGjXE","https://drive.google.com/drive/folders/1EV9HMsmtFWGYX7Zoe8YkRzqlfsUhwOh_"]' data-names='["50% - Catalog A","50% - Catalog B"]'>
-        <div>
-          <strong>50% wool blend</strong><br><small>Balanced quality & price</small>
-        </div>
+      <div class="option" data-link="https://drive.google.com/drive/folders/1ytPSEbeUTF1WNe6aQl9JP3rkEGjfDbJD">
+        <div><strong>Suit Collection 2</strong><br><small>Elegant classic options</small></div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="option" data-link="https://drive.google.com/drive/folders/1dd4dbl49qyXf28a4QF-bb-aRPy3MdplT">
+        <div><strong>Suit Collection 3</strong><br><small>Premium and limited fabrics</small></div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="option" data-link="https://drive.google.com/drive/folders/1iN_eZNQv6Y7lVii2TlW1_jsnmHmNjWbL">
+        <div><strong>Women Suit Collection</strong><br><small>Elegant designs for women</small></div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-ghost" id="suitCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ties modal -->
+  <div id="tiesModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h3>Choose tie catalog</h3>
+
+      <div class="option" data-link="https://drive.google.com/drive/folders/1XKEE95BfEOWd5IrrPHw-NVF6-tgfOWLB">
+        <div><strong>Luxury Neck Ties — 8.5cm</strong><br><small>Classic wider style</small></div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="option" data-link="https://drive.google.com/drive/folders/1-39aLtwPRHgLe_T4lsFyuVFQHoGvE_6U">
+        <div><strong>Luxury Neck Ties — 7.5cm</strong><br><small>Slimmer modern style</small></div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-ghost" id="tiesCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fabrics modal -->
+  <div id="fabricModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h3>Choose fabric quality</h3>
+
+      <div class="option fabric-option" data-links='["https://drive.google.com/drive/folders/1XuiCNDd3Dk4M-apOL_ow7T3m5afQfVQ3"]' data-names='["10% wool blend"]'>
+        <div><strong>10% wool blend</strong><br><small>Lightweight, budget-friendly</small></div>
+        <div><small>Open</small></div>
+      </div>
+
+      <div class="option fabric-option" data-links='["https://drive.google.com/drive/folders/1dZTWVDVFE_uvJ3DZd0SWKmPy_yYcGjXE","https://drive.google.com/drive/folders/1EV9HMsmtFWGYX7Zoe8YkRzqlfsUhwOh_"]' data-names='["50% - Catalog A","50% - Catalog B"]'>
+        <div><strong>50% wool blend</strong><br><small>Balanced quality & price</small></div>
         <div><small>Choose</small></div>
       </div>
 
-      <!-- 80% (two links, will show submenu) -->
-      <div class="fabric-option" data-links='["https://drive.google.com/drive/folders/1qpSgMdvMCH9bhsQqZF2RZwTX2zuUZUkU","https://drive.google.com/drive/folders/14LOexpoCnk7tNFwtacvLlaaUq0ZMUjjw"]' data-names='["80% - Catalog 1","80% - Catalog 2"]'>
-        <div>
-          <strong>80% wool blend</strong><br><small>Premium feel & durability</small>
-        </div>
+      <div class="option fabric-option" data-links='["https://drive.google.com/drive/folders/1qpSgMdvMCH9bhsQqZF2RZwTX2zuUZUkU","https://drive.google.com/drive/folders/14LOexpoCnk7tNFwtacvLlaaUq0ZMUjjw"]' data-names='["80% - Catalog 1","80% - Catalog 2"]'>
+        <div><strong>80% wool blend</strong><br><small>Premium feel & durability</small></div>
         <div><small>Choose</small></div>
       </div>
 
@@ -143,192 +163,50 @@
     </div>
   </div>
 
-  <!-- Catalog chooser modal (if selected option has multiple links) -->
-  <div id="catalogChooser" class="chooser" aria-hidden="true">
-    <div class="chooser-card" role="dialog" aria-modal="true" aria-labelledby="chooserTitle">
-      <h4 id="chooserTitle">Choose catalog</h4>
-      <div id="catalogList"></div>
-      <div style="text-align:right;margin-top:10px">
-        <button class="btn-ghost" id="chooserClose">Back</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Lightbox (slim & blazer) -->
-  <div id="lightbox" class="lb" aria-hidden="true">
-    <button id="lbClose" class="lb-close" aria-label="Close">&times;</button>
-    <button id="lbPrev" class="lb-prev" aria-label="Previous">&#10094;</button>
-
-    <div class="lb-inner" role="dialog" aria-modal="true">
-      <img id="lbImage" class="lb-img" src="" alt="Gallery image">
-      <div id="lbCounter" class="lb-counter"></div>
-      <div id="lbThumbs" class="lb-thumbs" aria-hidden="false"></div>
-    </div>
-
-    <button id="lbNext" class="lb-next" aria-label="Next">&#10095;</button>
-  </div>
-
 <script>
-/* ---------------------------
-  GALLERIES (slim & blazer)
-----------------------------*/
-const GALLERIES = {
-  slim: ["navyslimcutsuits.jpg"],
-  blazer: ["blazer.jpg"]
-};
-
-/* ----- Lightbox logic (slim & blazer) ----- */
-const links = document.querySelectorAll('.card-link');
-const lb = document.getElementById('lightbox');
-const lbImage = document.getElementById('lbImage');
-const lbThumbs = document.getElementById('lbThumbs');
-const lbCounter = document.getElementById('lbCounter');
-const lbClose = document.getElementById('lbClose');
-const lbPrev = document.getElementById('lbPrev');
-const lbNext = document.getElementById('lbNext');
-
-let activeGallery = [];
-let currentIndex = 0;
-
-links.forEach(link => {
-  if (link.id === 'fabricsCard') return; // fabrics handled separately
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const key = link.dataset.gallery;
-    if (!key || !GALLERIES[key]) return;
-    activeGallery = GALLERIES[key].slice();
-    if (activeGallery.length === 0) return;
-    buildThumbs(activeGallery);
-    openLightbox(0);
-  });
+/* --- Slim modal --- */
+const slimCard = document.getElementById('slimCard');
+const suitModal = document.getElementById('suitModal');
+const suitCancel = document.getElementById('suitCancel');
+slimCard.addEventListener('click', (e)=>{ e.preventDefault(); suitModal.classList.add('show'); });
+suitCancel.addEventListener('click', ()=>{ suitModal.classList.remove('show'); });
+document.querySelectorAll('#suitModal .option').forEach(opt=>{
+  opt.addEventListener('click', ()=>{ const url=opt.getAttribute('data-link'); if(url) window.location.href=url; });
 });
+suitModal.addEventListener('click',(e)=>{ if(e.target===suitModal) suitModal.classList.remove('show'); });
 
-function buildThumbs(list) {
-  lbThumbs.innerHTML = "";
-  list.forEach((name, i) => {
-    const img = document.createElement('img');
-    img.src = "images/" + name;
-    img.alt = "Image " + (i+1);
-    img.dataset.index = i;
-    img.addEventListener('click', () => showImage(i));
-    lbThumbs.appendChild(img);
-  });
-}
-
-function updateActiveThumb() {
-  Array.from(lbThumbs.children).forEach((el, idx) => {
-    el.classList.toggle('active', idx === currentIndex);
-  });
-  lbCounter.textContent = (currentIndex + 1) + " / " + activeGallery.length;
-}
-
-function showImage(i) {
-  currentIndex = (i + activeGallery.length) % activeGallery.length;
-  lbImage.src = "images/" + activeGallery[currentIndex];
-  lbImage.alt = "Image " + (currentIndex + 1);
-  updateActiveThumb();
-}
-
-function openLightbox(start=0) {
-  showImage(start);
-  lb.classList.add('show');
-  lb.setAttribute('aria-hidden','false');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox() {
-  lb.classList.remove('show');
-  lb.setAttribute('aria-hidden','true');
-  document.body.style.overflow = '';
-}
-function prevImage(){ showImage(currentIndex - 1); }
-function nextImage(){ showImage(currentIndex + 1); }
-
-lbPrev.addEventListener('click', prevImage);
-lbNext.addEventListener('click', nextImage);
-lbClose.addEventListener('click', closeLightbox);
-lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
-
-let startX = 0;
-lbImage.addEventListener('touchstart', (e) => startX = e.changedTouches[0].clientX);
-lbImage.addEventListener('touchend', (e) => {
-  const endX = e.changedTouches[0].clientX;
-  const diff = endX - startX;
-  if (diff > 40) prevImage();
-  else if (diff < -40) nextImage();
+/* --- Ties modal --- */
+const tiesCard=document.getElementById('tiesCard');
+const tiesModal=document.getElementById('tiesModal');
+const tiesCancel=document.getElementById('tiesCancel');
+tiesCard.addEventListener('click',(e)=>{ e.preventDefault(); tiesModal.classList.add('show'); });
+tiesCancel.addEventListener('click',()=>{ tiesModal.classList.remove('show'); });
+document.querySelectorAll('#tiesModal .option').forEach(opt=>{
+  opt.addEventListener('click',()=>{ const url=opt.getAttribute('data-link'); if(url) window.location.href=url; });
 });
-document.addEventListener('keydown', (e) => {
-  if (!lb.classList.contains('show')) return;
-  if (e.key === 'ArrowLeft') prevImage();
-  if (e.key === 'ArrowRight') nextImage();
-  if (e.key === 'Escape') closeLightbox();
-});
+tiesModal.addEventListener('click',(e)=>{ if(e.target===tiesModal) tiesModal.classList.remove('show'); });
 
-/* ----- Fabrics modal & catalog chooser ----- */
-const fabricsCard = document.getElementById('fabricsCard');
-const fabricModal = document.getElementById('fabricModal');
-const fabricCancel = document.getElementById('fabricCancel');
-const catalogChooser = document.getElementById('catalogChooser');
-const catalogList = document.getElementById('catalogList');
-const chooserClose = document.getElementById('chooserClose');
-
-fabricsCard.addEventListener('click', (e) => {
-  e.preventDefault();
-  fabricModal.classList.add('show');
-  fabricModal.setAttribute('aria-hidden','false');
-});
-
-fabricCancel.addEventListener('click', () => {
-  fabricModal.classList.remove('show');
-  fabricModal.setAttribute('aria-hidden','true');
-});
-
-// when an option is clicked: if single link => open, if multiple => show chooser with labels
-document.querySelectorAll('.fabric-option').forEach(opt => {
-  opt.addEventListener('click', () => {
-    const links = JSON.parse(opt.getAttribute('data-links') || '[]');
-    const names = JSON.parse(opt.getAttribute('data-names') || '[]');
-
-    // close selection modal
+/* --- Fabrics modal & chooser --- */
+const fabricsCard=document.getElementById('fabricsCard');
+const fabricModal=document.getElementById('fabricModal');
+const fabricCancel=document.getElementById('fabricCancel');
+fabricsCard.addEventListener('click',(e)=>{ e.preventDefault(); fabricModal.classList.add('show'); });
+fabricCancel.addEventListener('click',()=>{ fabricModal.classList.remove('show'); });
+document.querySelectorAll('.fabric-option').forEach(opt=>{
+  opt.addEventListener('click',()=>{
+    const links=JSON.parse(opt.getAttribute('data-links')||'[]');
+    const names=JSON.parse(opt.getAttribute('data-names')||'[]');
     fabricModal.classList.remove('show');
-    fabricModal.setAttribute('aria-hidden','true');
-
-    if (links.length === 0) return;
-
-    if (links.length === 1) {
-      // directly open single link in same tab
-      window.location.href = links[0];
-      return;
-    }
-
-    // multiple links -> show chooser with catalog items
-    catalogList.innerHTML = "";
-    links.forEach((u, idx) => {
-      const label = names[idx] || `Catalog ${idx+1}`;
-      const item = document.createElement('div');
-      item.className = 'catalog-item';
-      item.innerHTML = `<div><strong>${label}</strong><br><small>${u}</small></div><div><small>Open</small></div>`;
-      item.addEventListener('click', () => {
-        // open selected catalog (same tab)
-        window.location.href = u;
-      });
-      catalogList.appendChild(item);
-    });
-
-    catalogChooser.classList.add('show');
-    catalogChooser.setAttribute('aria-hidden','false');
+    if(links.length===1){ window.location.href=links[0]; return; }
+    const chooser=document.createElement('div');
+    chooser.className='modal show';
+    chooser.innerHTML=`<div class="modal-card"><h3>Choose catalog</h3>${links.map((u,i)=>`<div class="option" data-link="${u}"><div><strong>${names[i]||('Catalog '+(i+1))}</strong></div><div><small>Open</small></div></div>`).join('')}<div class="modal-actions"><button class="btn-ghost" id="closeChooser">Back</button></div></div>`;
+    document.body.appendChild(chooser);
+    chooser.querySelectorAll('[data-link]').forEach(div=>div.addEventListener('click',()=>window.location.href=div.getAttribute('data-link')));
+    chooser.querySelector('#closeChooser').addEventListener('click',()=>chooser.remove());
+    chooser.addEventListener('click',e=>{ if(e.target===chooser) chooser.remove(); });
   });
 });
-
-// close chooser
-chooserClose.addEventListener('click', () => {
-  catalogChooser.classList.remove('show');
-  catalogChooser.setAttribute('aria-hidden','true');
-});
-
-// clicking outside modals closes them
-fabricModal.addEventListener('click', (e) => { if (e.target === fabricModal) { fabricModal.classList.remove('show'); fabricModal.setAttribute('aria-hidden','true'); }});
-catalogChooser.addEventListener('click', (e) => { if (e.target === catalogChooser) { catalogChooser.classList.remove('show'); catalogChooser.setAttribute('aria-hidden','true'); }});
-
 </script>
 </body>
 </html>
