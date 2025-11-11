@@ -1,26 +1,30 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Suit Factory Bangkok | Bespoke Tailor</title>
   <style>
     body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #0d0d0d; color: #f2f2f2; }
-    header { background-color: #000; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; }
+    header { background-color: #000; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
     header h1 { font-size: 1.8rem; color: gold; letter-spacing: 1px; }
     nav a { color: #f2f2f2; text-decoration: none; margin: 0 15px; font-weight: 500; }
     nav a:hover { color: gold; }
     section { padding: 60px 40px; }
-    .hero { background: url('https://images.unsplash.com/photo-1582233479364-3f1c6a1a92b4?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat; height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .hero { background: url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat; height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center; }
     .hero h2 { font-size: 3rem; background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px; color: gold; }
     .about, .services, .fabrics, .gallery, .contact { max-width: 1200px; margin: auto; }
     h3 { color: gold; margin-bottom: 15px; }
     p { line-height: 1.7; }
-    .fabrics img, .gallery img { width: 100%; border-radius: 10px; margin-top: 15px; }
+    .fabrics img, .gallery img { width: 100%; border-radius: 10px; margin-top: 15px; transition: transform 0.3s ease; }
+    .fabrics img:hover, .gallery img:hover { transform: scale(1.03); }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
     footer { background: #111; text-align: center; padding: 30px; color: #ccc; }
-    button { background-color: gold; border: none; color: #000; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-    button:hover { background-color: #f6e05e; }
+    button { background-color: gold; border: none; color: #000; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: all 0.3s ease; }
+    button:hover { background-color: #f6e05e; transform: scale(1.05); }
     a.contact-link { color: gold; text-decoration: underline; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 10px; }
   </style>
 </head>
 <body>
@@ -33,35 +37,60 @@
       <a href="#gallery">Gallery</a>
       <a href="#contact">Contact</a>
     </nav>
-  </header>  <section class="hero">
+  </header>
+
+  <section class="hero">
     <h2>Bespoke Tailoring for Professionals & Travelers</h2>
-  </section>  <section id="about" class="about">
+  </section>
+
+  <section id="about" class="about">
     <h3>Our Story</h3>
-    <p>Founded in Bangkok, <strong>Suit Factory Bangkok</strong> offers world-class bespoke tailoring with attention to every detail. From fine wool fabrics to perfect fitting, we create timeless suits for business, weddings, and travel. Our passion is in making you look sharp and feel confident.</p>
-  </section>  <section id="fabrics" class="fabrics">
+    <p>
+      Welcome to <strong>Suit Factory Bangkok</strong> — where timeless craftsmanship meets modern style. 
+      With years of tailoring experience, we specialize in creating custom suits and shirts designed for confidence, comfort, and class. 
+      From business formals to wedding wear, every piece is made to your perfect fit.
+    </p>
+  </section>
+
+  <section id="fabrics" class="fabrics">
     <h3>Fabrics & Collections</h3>
     <div class="grid">
-      <div><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80" alt="10-20% Wool Blend" /><p>10-20% Wool Blend</p></div>
-      <div><img src="https://images.unsplash.com/photo-1585386959984-a41552231693?auto=format&fit=crop&w=800&q=80" alt="40-60% Wool Blend" /><p>40-60% Wool Blend</p></div>
-      <div><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80" alt="70-80% Wool Blend" /><p>70-80% Wool Blend</p></div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80" alt="Men's navy suit fabric">
+        <p>10-20% Wool Blend (Lightweight Classic)</p>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1520975913624-4d2f1d3f6f8a?auto=format&fit=crop&w=800&q=80" alt="Tailored shirt fabrics">
+        <p>40-60% Wool Blend (Everyday Comfort)</p>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1520975922366-7b1b8f8f9a8b?auto=format&fit=crop&w=800&q=80" alt="Luxury suit fabric">
+        <p>70-80% Wool Blend (Luxury Edition)</p>
+      </div>
     </div>
-  </section>  <section id="services" class="services">
-    <h3>Custom Tailoring Services</h3>
+  </section>
+
+  <section id="services" class="services">
+    <h3>Our Services</h3>
     <ul>
-      <li>🧵 Bespoke suits, shirts & trousers</li>
-      <li>👔 On-site measurement & express delivery</li>
-      <li>🪡 Alterations & resizing</li>
-      <li>🏨 Hotel fitting service for travelers</li>
-      <li>🎓 Student and corporate packages</li>
+      <li>🧵 Custom Suits, Shirts, and Trousers</li>
+      <li>👔 On-site Measurement & Express Delivery</li>
+      <li>🪡 Alterations & Resizing</li>
+      <li>🏨 Hotel Fitting Service for Tourists</li>
+      <li>🎓 Student and Corporate Uniform Packages</li>
     </ul>
-  </section>  <section id="gallery" class="gallery">
+  </section>
+
+  <section id="gallery" class="gallery">
     <h3>Gallery</h3>
     <div class="grid">
-      <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=80" alt="Tailor Work 1">
-      <img src="https://images.unsplash.com/photo-1593032465171-8b19080d3c92?auto=format&fit=crop&w=800&q=80" alt="Tailor Work 2">
-      <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=800&q=80" alt="Tailor Work 3">
+      <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80" alt="Tailor at work - stitching suit">
+      <img src="https://images.unsplash.com/photo-1519744792095-2f2205e87b6f?auto=format&fit=crop&w=800&q=80" alt="Men's suit fitting">
+      <img src="https://images.unsplash.com/photo-1521335629791-ce4aec67dd47?auto=format&fit=crop&w=800&q=80" alt="Custom shirts neatly displayed">
     </div>
-  </section>  <section id="contact" class="contact">
+  </section>
+
+  <section id="contact" class="contact">
     <h3>Contact Us</h3>
     <p>📍 <strong>Bangkok, Thailand</strong></p>
     <p>📞 <a class="contact-link" href="tel:+66643122029">+66 64 312 2029</a></p>
@@ -69,8 +98,12 @@
     <p>💬 <a class="contact-link" href="https://wa.me/66643122029">Chat on WhatsApp</a></p>
     <p>📸 <a class="contact-link" href="#">Instagram (coming soon)</a></p>
     <br>
-    <button onclick="window.location.href='mailto:suitfactorybangkok@gmail.com'">Book an Appointment</button>
-  </section>  <footer>
+    <button onclick="window.location.href='https://wa.me/66643122029?text=Hello%20Suit%20Factory%20Bangkok%2C%20I%20would%20like%20to%20book%20an%20appointment%20for%20a%20bespoke%20suit.'">
+      Book an Appointment (WhatsApp)
+    </button>
+  </section>
+
+  <footer>
     <p>&copy; 2025 Suit Factory Bangkok. All Rights Reserved.</p>
   </footer>
 </body>
