@@ -5,16 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Suit Factory Bangkok — Bespoke Suits & Shirts</title>
 <style>
-  :root{
-    --bg:#0d0d0d;--muted:#cfcfcf;--gold:#D4AF37;--card:#111;--accent:#222;
-  }
+  :root{--bg:#0d0d0d;--muted:#cfcfcf;--gold:#D4AF37;--card:#111;--accent:#222}
   *{box-sizing:border-box}
   body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;color:#f5f5f5;background:var(--bg)}
   header{background:#000;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:999;border-bottom:1px solid rgba(255,255,255,0.02)}
   header h1{margin:0;color:var(--gold);font-size:1.25rem;letter-spacing:1px}
   nav a{color:#f5f5f5;text-decoration:none;margin-left:12px;font-weight:600;font-size:0.95rem}
   nav a:hover{color:var(--gold)}
-  .hero{height:66vh;background:url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;display:flex;align-items:center;justify-content:center;padding:10px}
+  .hero{height:60vh;background:url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;display:flex;align-items:center;justify-content:center;padding:10px}
   .hero h2{background:rgba(0,0,0,0.6);padding:14px;border-radius:8px;color:var(--gold);font-size:1.9rem;text-align:center;margin:0}
   main{max-width:1100px;margin:0 auto;padding:20px}
   section{padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.02)}
@@ -39,6 +37,9 @@
   .tie-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
   .tie-thumb{background:var(--accent);padding:6px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;height:120px;overflow:hidden}
   .tie-thumb img{max-width:100%;max-height:100%;object-fit:contain}
+  .category-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .category-card{background:var(--card);padding:20px;border-radius:10px;text-align:center;cursor:pointer;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .back-link{color:#fff;background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:6px;display:inline-block;margin-bottom:12px}
   @media(max-width:520px){.hero h2{font-size:1.25rem;padding:12px}.card img{height:160px}.tie-thumb{height:90px}}
 </style>
 </head>
@@ -50,7 +51,7 @@
     <a href="#fabrics">Fabrics</a>
     <a href="#services">Services</a>
     <a href="#gallery">Gallery</a>
-    <a href="#ties">Ties</a>
+    <a href="#ties" id="nav-ties">Ties</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
@@ -104,15 +105,27 @@
     </div>
   </section>
 
+  <!-- ===== TIES: CATEGORY VIEW ===== -->
   <section id="ties">
-    <h3>Tie Collections — 300 Styles</h3>
-    <p class="small">Browse our full tie collection. Tap any thumbnail to open larger view and navigate.</p>
-
-    <!-- Tie thumbnails grid -->
-    <div class="tie-grid" id="tie-grid">
-      <!-- Thumbnails added by script -->
+    <h3>Tie Collections</h3>
+    <div id="ties-categories" class="category-cards">
+      <div class="category-card" onclick="showCollection('rzs')">
+        <h4 style="color:var(--gold);margin:0 0 8px 0">5cm wide Neck Ties</h4>
+        <p style="color:#ddd;margin:0">RZS collection — 100 ties (4 files)</p>
+      </div>
+      <div class="category-card" onclick="showCollection('zst')">
+        <h4 style="color:var(--gold);margin:0 0 8px 0">8.5cm wide Neck Ties</h4>
+        <p style="color:#ddd;margin:0">ZST collection — 200 ties (40 files)</p>
+      </div>
     </div>
-    <p style="margin-top:8px;color:#dcdcdc">Full set: 300 ties (RZS + ZST). Want only some shown on homepage? Tell me and I’ll set featured ones.</p>
+
+    <!-- Back link + collection container -->
+    <div id="collection-view" style="display:none;margin-top:16px">
+      <a class="back-link" href="javascript:showCategories()">← Back to Tie Collections</a>
+      <h4 id="collection-title" style="margin-top:8px;color:#fff"></h4>
+      <div id="collection-grid" class="tie-grid" style="margin-top:12px"></div>
+    </div>
+
   </section>
 
   <section id="contact">
@@ -121,7 +134,6 @@
     <p>📞 <a class="contact-link" href="tel:+66643122029">+66 64 312 2029</a></p>
     <p>📧 <a class="contact-link" href="mailto:suitfactorybangkok@gmail.com">suitfactorybangkok@gmail.com</a></p>
     <p>💬 <a class="contact-link" href="https://wa.me/66643122029">Chat on WhatsApp</a></p>
-    <p>📸 <a class="contact-link" href="#">Instagram (coming soon)</a></p>
     <br>
     <button class="btn" onclick="window.location.href='https://wa.me/66643122029?text=Hello%20Suit%20Factory%20Bangkok%2C%20I%20would%20like%20to%20book%20an%20appointment.'">Book an Appointment (WhatsApp)</button>
   </section>
@@ -168,9 +180,12 @@
 </div>
 
 <script>
-  // --- tie filenames array (RZS + ZST) ---
-  const ties = [
-    "RZS 1–25.jpg","RZS 26–50.jpg","RZS 51–75.jpg","RZS 76–100.jpg",
+  // ===== tie filenames arrays (RZS + ZST) =====
+  const rzs = [
+    "RZS 1–25.jpg","RZS 26–50.jpg","RZS 51–75.jpg","RZS 76–100.jpg"
+  ];
+
+  const zst = [
     "zst1–zst5.jpg","zst6–zst10.jpg","zst11–zst15.jpg","zst16–zst20.jpg",
     "zst21–zst25.jpg","zst26–zst30.jpg","zst31–zst35.jpg","zst36–zst40.jpg",
     "zst41–zst45.jpg","zst46–zst50.jpg","zst51–zst55.jpg","zst56–zst60.jpg",
@@ -183,39 +198,72 @@
     "zst181–zst185.jpg","zst186–zst190.jpg","zst191–zst195.jpg","zst196–zst200.jpg"
   ];
 
-  // Build tie thumbnails
-  const tieGrid = document.getElementById('tie-grid');
-  ties.forEach((name, i) => {
-    const div = document.createElement('div');
-    div.className = 'tie-thumb';
-    // use image path exactly as uploaded (in /images/)
-    const img = document.createElement('img');
-    img.src = `/images/${name}`;
-    img.alt = name;
-    img.loading = 'lazy';
-    div.appendChild(img);
-    div.addEventListener('click', () => openTie(i));
-    tieGrid.appendChild(div);
-  });
+  // Elements
+  const categoriesEl = document.getElementById('ties-categories');
+  const collectionView = document.getElementById('collection-view');
+  const collectionTitle = document.getElementById('collection-title');
+  const collectionGrid = document.getElementById('collection-grid');
 
-  // Lightbox controls
+  // Show categories (default)
+  function showCategories(){
+    collectionView.style.display = 'none';
+    categoriesEl.style.display = 'grid';
+    window.scrollTo({top: document.getElementById('ties').offsetTop - 80, behavior:'smooth'});
+  }
+
+  // Show chosen collection: 'rzs' or 'zst'
+  function showCollection(which){
+    categoriesEl.style.display = 'none';
+    collectionGrid.innerHTML = '';
+    collectionView.style.display = 'block';
+
+    let list = which === 'rzs' ? rzs : zst;
+    collectionTitle.textContent = which === 'rzs' ? '5cm wide Neck Ties — RZS Collection' : '8.5cm wide Neck Ties — ZST Collection';
+
+    list.forEach((name, i) => {
+      const div = document.createElement('div');
+      div.className = 'tie-thumb';
+      const img = document.createElement('img');
+      img.src = `/images/${name}`;
+      img.alt = name;
+      img.loading = 'lazy';
+      div.appendChild(img);
+      div.addEventListener('click', () => openTie(name, list));
+      collectionGrid.appendChild(div);
+    });
+
+    window.scrollTo({top: document.getElementById('ties').offsetTop - 80, behavior:'smooth'});
+  }
+
+  // ===== lightbox for ties =====
   const tieBackdrop = document.getElementById('tie-backdrop');
   const tieLarge = document.getElementById('tie-large');
   const tieTitle = document.getElementById('tie-title');
-  let current = 0;
-  function openTie(index){
-    current = index;
-    tieLarge.src = `/images/${ties[current]}`;
-    tieTitle.textContent = ties[current];
+  let currentList = []; // current displayed list
+  let currentIndex = 0;
+
+  function openTie(name, list){
+    currentList = list.slice(); // copy
+    currentIndex = currentList.indexOf(name);
+    if(currentIndex < 0) currentIndex = 0;
+    tieLarge.src = `/images/${currentList[currentIndex]}`;
+    tieTitle.textContent = currentList[currentIndex];
     tieBackdrop.style.display = 'flex';
     tieBackdrop.setAttribute('aria-hidden','false');
   }
-  document.getElementById('close-tie').addEventListener('click', closeTie);
-  document.getElementById('prev-tie').addEventListener('click', () => { current = (current-1+ties.length)%ties.length; openTie(current); });
-  document.getElementById('next-tie').addEventListener('click', () => { current = (current+1)%ties.length; openTie(current); });
-  function closeTie(){ tieBackdrop.style.display='none'; tieBackdrop.setAttribute('aria-hidden','true'); }
 
-  // close backdrop by clicking outside
+  function closeTie(){ tieBackdrop.style.display = 'none'; tieBackdrop.setAttribute('aria-hidden','true'); }
+  document.getElementById('close-tie').addEventListener('click', closeTie);
+  document.getElementById('prev-tie').addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + currentList.length) % currentList.length;
+    tieLarge.src = `/images/${currentList[currentIndex]}`;
+    tieTitle.textContent = currentList[currentIndex];
+  });
+  document.getElementById('next-tie').addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % currentList.length;
+    tieLarge.src = `/images/${currentList[currentIndex]}`;
+    tieTitle.textContent = currentList[currentIndex];
+  });
   tieBackdrop.addEventListener('click', (e) => { if(e.target === tieBackdrop) closeTie(); });
 
   // Fabric modal controls
@@ -231,6 +279,15 @@
       document.querySelectorAll('.quality-item').forEach(x => x.style.border = '0');
       item.style.border = '2px solid var(--gold)';
     });
+  });
+
+  // Initialize: show categories by default
+  showCategories();
+
+  // Smooth scroll when nav ties clicked
+  document.getElementById('nav-ties').addEventListener('click', (e) => {
+    e.preventDefault();
+    showCategories();
   });
 </script>
 </body>
