@@ -1,131 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Suit Factory Bangkok | Bespoke Tailor</title>
-  <style>
-    :root{--bg:#0d0d0d;--muted:#ccc;--gold:#D4AF37;--card:#111}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;color:#f5f5f5;background:var(--bg)}
-    header{background:#000;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:999}
-    header h1{margin:0;color:var(--gold);font-size:1.4rem;letter-spacing:1px}
-    nav a{color:#f5f5f5;text-decoration:none;margin-left:14px;font-weight:600}
-    nav a:hover{color:var(--gold)}
-    .hero{height:78vh;background:url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;display:flex;align-items:center;justify-content:center}
-    .hero h2{background:rgba(0,0,0,0.55);padding:20px;border-radius:8px;color:var(--gold);font-size:2.4rem;text-align:center;margin:0}
-    section{padding:48px 20px;max-width:1100px;margin:0 auto}
-    h3{color:var(--gold);margin:0 0 14px 0;font-size:1.2rem}
-    p{color:#e8e8e8;line-height:1.6}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-    .card{background:var(--card);padding:12px;border-radius:10px}
-    .card img{width:100%;height:220px;object-fit:cover;border-radius:8px;display:block;transition:transform .25s}
-    .card img:hover{transform:scale(1.03)}
-    .card p{margin:10px 0 0 0;color:#ddd;font-size:0.95rem}
-    ul{padding-left:0;margin:0}
-    li{margin-bottom:10px;color:#e7e7e7}
-    .contact-link{color:var(--gold);text-decoration:none}
-    footer{background:#090909;padding:28px;text-align:center;color:var(--muted);margin-top:28px}
-    .btn{background:var(--gold);color:#000;padding:12px 20px;border-radius:6px;border:none;font-weight:700;cursor:pointer;display:inline-block}
-    .btn:hover{opacity:.95;transform:translateY(-2px)}
-    @media (max-width:520px){.hero h2{font-size:1.5rem;padding:14px}}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Suit Factory Bangkok — Bespoke Suits & Shirts</title>
+<style>
+  :root{
+    --bg:#0d0d0d;--muted:#cfcfcf;--gold:#D4AF37;--card:#111;--accent:#222;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;color:#f5f5f5;background:var(--bg)}
+  header{background:#000;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:999;border-bottom:1px solid rgba(255,255,255,0.02)}
+  header h1{margin:0;color:var(--gold);font-size:1.25rem;letter-spacing:1px}
+  nav a{color:#f5f5f5;text-decoration:none;margin-left:12px;font-weight:600;font-size:0.95rem}
+  nav a:hover{color:var(--gold)}
+  .hero{height:66vh;background:url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;display:flex;align-items:center;justify-content:center;padding:10px}
+  .hero h2{background:rgba(0,0,0,0.6);padding:14px;border-radius:8px;color:var(--gold);font-size:1.9rem;text-align:center;margin:0}
+  main{max-width:1100px;margin:0 auto;padding:20px}
+  section{padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.02)}
+  h3{color:var(--gold);margin:0 0 10px 0;font-size:1.1rem}
+  p{color:#e8e8e8;line-height:1.6}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .card{background:var(--card);padding:10px;border-radius:10px}
+  .card img{width:100%;height:220px;object-fit:cover;border-radius:8px;display:block;transition:transform .25s}
+  .card img:hover{transform:scale(1.03)}
+  .card p{margin:10px 0 0 0;color:#ddd;font-size:0.95rem}
+  .list-inline{display:flex;flex-wrap:wrap;gap:8px}
+  .btn{background:var(--gold);color:#000;padding:10px 14px;border-radius:6px;border:none;font-weight:700;cursor:pointer}
+  .btn:hover{opacity:.95;transform:translateY(-2px)}
+  .contact-link{color:var(--gold);text-decoration:none}
+  footer{background:#090909;padding:22px;text-align:center;color:var(--muted);margin-top:22px}
+  /* modal / lightbox */
+  .backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;padding:20px;z-index:3000}
+  .lightbox{max-width:1000px;width:100%;background:#0f0f0f;border-radius:10px;padding:12px}
+  .lightbox img{width:100%;height:auto;border-radius:6px;display:block}
+  .lb-controls{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+  .small{font-size:0.95rem;color:#ddd}
+  .tie-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+  .tie-thumb{background:var(--accent);padding:6px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;height:120px;overflow:hidden}
+  .tie-thumb img{max-width:100%;max-height:100%;object-fit:contain}
+  @media(max-width:520px){.hero h2{font-size:1.25rem;padding:12px}.card img{height:160px}.tie-thumb{height:90px}}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Suit Factory Bangkok</h1>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#fabrics">Fabrics</a>
-      <a href="#services">Services</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+<header>
+  <h1>Suit Factory Bangkok</h1>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#fabrics">Fabrics</a>
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#ties">Ties</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
 
-  <main>
-    <section class="hero" role="img" aria-label="Tailoring workshop">
-      <h2>Bespoke Suits & Shirts — Made to Measure</h2>
-    </section>
+<div class="hero" role="img" aria-label="Tailoring workshop">
+  <h2>Bespoke Suits & Shirts — Made to Measure</h2>
+</div>
 
-    <section id="about">
-      <h3>Our Story</h3>
-      <p>
-        Suit Factory Bangkok crafts tailor-made suits and shirts with attention to detail and perfect fit.
-        We combine traditional tailoring skills with modern service — on-site measurements, careful fittings,
-        and fast, reliable delivery for professionals and travelers.
-      </p>
-    </section>
+<main>
+  <section id="about">
+    <h3>Our Story</h3>
+    <p>Suit Factory Bangkok crafts tailor-made suits and shirts with attention to detail and perfect fit. We combine traditional tailoring skills with modern service — on-site measurements, careful fittings, and reliable delivery for professionals and travelers.</p>
+  </section>
 
-    <section id="fabrics">
-      <h3>Fabrics & Collections</h3>
-      <div class="grid">
-        <!-- Formal wool / suit fabric closeup -->
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=1200&q=80" alt="Closeup of fine wool suit fabric">
-          <p><strong>10–20% Wool Blend</strong> — Lightweight, breathable suiting for travel & warm climates.</p>
-        </div>
-
-        <!-- Formal shirt fabric closeup -->
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1520975913624-4d2f1d3f6f8a?auto=format&fit=crop&w=1200&q=80" alt="Closeup of cotton shirt fabric and stitching">
-          <p><strong>40–60% Wool / Cotton combos</strong> — Everyday suits and quality shirts for office wear.</p>
-        </div>
-
-        <!-- Premium wool fabric -->
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=80" alt="Luxury wool suit fabric and texture">
-          <p><strong>70–80% Wool Blend</strong> — Luxury, structured suiting for special occasions and weddings.</p>
-        </div>
+  <section id="fabrics">
+    <h3>Fabrics & Collections</h3>
+    <div class="grid">
+      <div class="card">
+        <img src="/images/fabric-10-20.jpg" alt="10-20% wool blend">
+        <p><strong>10–20% Wool Blend</strong> — Lightweight, breathable for travel and warm climates.</p>
       </div>
-    </section>
-
-    <section id="services">
-      <h3>Services</h3>
-      <ul>
-        <li>🧵 Bespoke suits, shirts & trousers — measured to your body.</li>
-        <li>👔 On-site measurement (hotel or office) and multiple fittings.</li>
-        <li>🪡 Alterations, repairs and express finishing.</li>
-        <li>🏨 Hotel-fitting service for travelers (we come to you).</li>
-        <li>🎓 Student and corporate uniform and bulk orders.</li>
-      </ul>
-    </section>
-
-    <section id="gallery">
-      <h3>Gallery — Suits & Fittings</h3>
-      <div class="grid">
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=80" alt="Finished bespoke suit">
-          <p>Bespoke finish — precise stitch and finish.</p>
-        </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1519744792095-2f2205e87b6f?auto=format&fit=crop&w=1200&q=80" alt="Tailor measuring client">
-          <p>On-site measurement and first fitting.</p>
-        </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1520975922366-7b1b8f8f9a8b?auto=format&fit=crop&w=1200&q=80" alt="Shirts displayed in shop">
-          <p>Shirts collection — clean collars and perfect seams.</p>
-        </div>
+      <div class="card">
+        <img src="/images/fabric-40-60.jpg" alt="40-60% wool blend">
+        <p><strong>40–60% Wool Blend</strong> — Balanced weight for daily office suits and shirts.</p>
       </div>
-    </section>
+      <div class="card">
+        <img src="/images/fabric-70-80.jpg" alt="70-80% wool blend">
+        <p><strong>70–80% Wool Blend</strong> — Luxury, structured fabrics for formal events and weddings.</p>
+      </div>
+    </div>
+    <p style="margin-top:12px;color:#dcdcdc">Want to preview fabric closeups? <button class="btn" id="open-fabric">Preview Fabric Qualities</button></p>
+  </section>
 
-    <section id="contact">
-      <h3>Contact & Bookings</h3>
-      <p>📍 <strong>Bangkok, Thailand</strong></p>
-      <p>📞 <a class="contact-link" href="tel:+66643122029">+66 64 312 2029</a></p>
-      <p>📧 <a class="contact-link" href="mailto:suitfactorybangkok@gmail.com">suitfactorybangkok@gmail.com</a></p>
-      <p>💬 <a class="contact-link" href="https://wa.me/66643122029">Chat on WhatsApp</a></p>
-      <p>📸 <a class="contact-link" href="#">Instagram (coming soon)</a></p>
-      <br>
-      <!-- Book opens WhatsApp with prefilled message -->
-      <button class="btn" onclick="window.location.href='https://wa.me/66643122029?text=Hello%20Suit%20Factory%20Bangkok%2C%20I%20would%20like%20to%20book%20an%20appointment%20for%20a%20bespoke%20suit.'" aria-label="Book appointment via WhatsApp">
-        Book an Appointment (WhatsApp)
-      </button>
-    </section>
-  </main>
+  <section id="services">
+    <h3>Services</h3>
+    <ul>
+      <li>🧵 Bespoke suits, shirts & trousers — measured to your body.</li>
+      <li>👔 On-site measurement (hotel or office) and multiple fittings.</li>
+      <li>🪡 Alterations, repairs and express finishing.</li>
+      <li>🏨 Hotel-fitting service for travelers (we come to you).</li>
+      <li>🎓 Student and corporate uniform and bulk orders.</li>
+    </ul>
+  </section>
 
-  <footer>
-    <p>&copy; 2025 Suit Factory Bangkok — Tailoring with care. All rights reserved.</p>
-  </footer>
+  <section id="gallery">
+    <h3>Gallery — Suits & Fittings</h3>
+    <div class="grid">
+      <div class="card"><img src="/images/gallery-suit-1.jpg" alt="Finished bespoke suit"><p>Bespoke finish — precise stitch and finish.</p></div>
+      <div class="card"><img src="/images/gallery-fitting.jpg" alt="Tailor measuring client"><p>On-site measurement and first fitting.</p></div>
+      <div class="card"><img src="/images/gallery-shirts.jpg" alt="Shirts collection"><p>Shirts collection — clean collars and perfect seams.</p></div>
+    </div>
+  </section>
+
+  <section id="ties">
+    <h3>Tie Collections — 300 Styles</h3>
+    <p class="small">Browse our full tie collection. Tap any thumbnail to open larger view and navigate.</p>
+
+    <!-- Tie thumbnails grid -->
+    <div class="tie-grid" id="tie-grid">
+      <!-- Thumbnails added by script -->
+    </div>
+    <p style="margin-top:8px;color:#dcdcdc">Full set: 300 ties (RZS + ZST). Want only some shown on homepage? Tell me and I’ll set featured ones.</p>
+  </section>
+
+  <section id="contact">
+    <h3>Contact & Bookings</h3>
+    <p>📍 <strong>Bangkok, Thailand</strong></p>
+    <p>📞 <a class="contact-link" href="tel:+66643122029">+66 64 312 2029</a></p>
+    <p>📧 <a class="contact-link" href="mailto:suitfactorybangkok@gmail.com">suitfactorybangkok@gmail.com</a></p>
+    <p>💬 <a class="contact-link" href="https://wa.me/66643122029">Chat on WhatsApp</a></p>
+    <p>📸 <a class="contact-link" href="#">Instagram (coming soon)</a></p>
+    <br>
+    <button class="btn" onclick="window.location.href='https://wa.me/66643122029?text=Hello%20Suit%20Factory%20Bangkok%2C%20I%20would%20like%20to%20book%20an%20appointment.'">Book an Appointment (WhatsApp)</button>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 Suit Factory Bangkok — Tailoring with care.</p>
+</footer>
+
+<!-- Fabric modal (reuse previous modal structure) -->
+<div class="backdrop" id="fabric-backdrop" aria-hidden="true">
+  <div class="lightbox" role="dialog" aria-modal="true">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong style="color:var(--gold)">Fabric Qualities</strong>
+      <button class="btn" id="close-fabric">Close</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 320px;gap:12px;margin-top:12px">
+      <div><img id="fabric-main" src="/images/fabric-10-20.jpg" alt="fabric closeup" style="width:100%;height:320px;object-fit:cover;border-radius:6px"></div>
+      <aside style="padding:6px">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="quality-item" data-img="/images/fabric-10-20.jpg"><strong>10–20% Wool Blend</strong><div style="color:#ddd">Lightweight & breathable</div></div>
+          <div class="quality-item" data-img="/images/fabric-40-60.jpg"><strong>40–60% Wool Blend</strong><div style="color:#ddd">Balanced for daily suits</div></div>
+          <div class="quality-item" data-img="/images/fabric-70-80.jpg"><strong>70–80% Wool Blend</strong><div style="color:#ddd">Luxury, best drape</div></div>
+        </div>
+        <div style="margin-top:12px"><button class="btn" onclick="window.location.href='https://wa.me/66643122029?text=Hello%20Suit%20Factory%20Bangkok%2C%20I%20want%20to%20order%20this%20fabric.'">Order (WhatsApp)</button></div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- Tie lightbox -->
+<div class="backdrop" id="tie-backdrop" aria-hidden="true">
+  <div class="lightbox" role="dialog" aria-modal="true" id="tie-lightbox">
+    <img id="tie-large" src="" alt="Tie large" />
+    <div class="lb-controls">
+      <div class="small" id="tie-title"></div>
+      <div>
+        <button class="btn" id="prev-tie">Prev</button>
+        <button class="btn" id="next-tie">Next</button>
+        <button class="btn" id="close-tie">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // --- tie filenames array (RZS + ZST) ---
+  const ties = [
+    "RZS 1–25.jpg","RZS 26–50.jpg","RZS 51–75.jpg","RZS 76–100.jpg",
+    "zst1–zst5.jpg","zst6–zst10.jpg","zst11–zst15.jpg","zst16–zst20.jpg",
+    "zst21–zst25.jpg","zst26–zst30.jpg","zst31–zst35.jpg","zst36–zst40.jpg",
+    "zst41–zst45.jpg","zst46–zst50.jpg","zst51–zst55.jpg","zst56–zst60.jpg",
+    "zst61–zst65.jpg","zst66–zst70.jpg","zst71–zst75.jpg","zst76–zst80.jpg",
+    "zst81–zst85.jpg","zst86–zst90.jpg","zst91–zst95.jpg","zst96–zst100.jpg",
+    "zst101–zst105.jpg","zst106–zst110.jpg","zst111–zst115.jpg","zst116–zst120.jpg",
+    "zst121–zst125.jpg","zst126–zst130.jpg","zst131–zst135.jpg","zst136–zst140.jpg",
+    "zst141–zst145.jpg","zst146–zst150.jpg","zst151–zst155.jpg","zst156–zst160.jpg",
+    "zst161–zst165.jpg","zst166–zst170.jpg","zst171–zst175.jpg","zst176–zst180.jpg",
+    "zst181–zst185.jpg","zst186–zst190.jpg","zst191–zst195.jpg","zst196–zst200.jpg"
+  ];
+
+  // Build tie thumbnails
+  const tieGrid = document.getElementById('tie-grid');
+  ties.forEach((name, i) => {
+    const div = document.createElement('div');
+    div.className = 'tie-thumb';
+    // use image path exactly as uploaded (in /images/)
+    const img = document.createElement('img');
+    img.src = `/images/${name}`;
+    img.alt = name;
+    img.loading = 'lazy';
+    div.appendChild(img);
+    div.addEventListener('click', () => openTie(i));
+    tieGrid.appendChild(div);
+  });
+
+  // Lightbox controls
+  const tieBackdrop = document.getElementById('tie-backdrop');
+  const tieLarge = document.getElementById('tie-large');
+  const tieTitle = document.getElementById('tie-title');
+  let current = 0;
+  function openTie(index){
+    current = index;
+    tieLarge.src = `/images/${ties[current]}`;
+    tieTitle.textContent = ties[current];
+    tieBackdrop.style.display = 'flex';
+    tieBackdrop.setAttribute('aria-hidden','false');
+  }
+  document.getElementById('close-tie').addEventListener('click', closeTie);
+  document.getElementById('prev-tie').addEventListener('click', () => { current = (current-1+ties.length)%ties.length; openTie(current); });
+  document.getElementById('next-tie').addEventListener('click', () => { current = (current+1)%ties.length; openTie(current); });
+  function closeTie(){ tieBackdrop.style.display='none'; tieBackdrop.setAttribute('aria-hidden','true'); }
+
+  // close backdrop by clicking outside
+  tieBackdrop.addEventListener('click', (e) => { if(e.target === tieBackdrop) closeTie(); });
+
+  // Fabric modal controls
+  const fb = document.getElementById('fabric-backdrop');
+  document.getElementById('open-fabric').addEventListener('click', () => { fb.style.display='flex'; fb.setAttribute('aria-hidden','false'); });
+  document.getElementById('close-fabric').addEventListener('click', () => { fb.style.display='none'; fb.setAttribute('aria-hidden','true'); });
+  fb.addEventListener('click', (e) => { if(e.target === fb){ fb.style.display='none'; fb.setAttribute('aria-hidden','true'); } });
+
+  // switch fabric images
+  document.querySelectorAll('.quality-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.getElementById('fabric-main').src = item.dataset.img;
+      document.querySelectorAll('.quality-item').forEach(x => x.style.border = '0');
+      item.style.border = '2px solid var(--gold)';
+    });
+  });
+</script>
 </body>
 </html>
